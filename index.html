@@ -3,386 +3,1075 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ad + Shopify Audit | Two Hoots Digital</title>
+<title>Two Hoots Digital — Meta Ads + Shopify Audit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Anybody:ital,wght@0,100..900;1,100..900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-:root{--black:#08080F;--black-mid:#0D0D1A;--black-card:#111122;--yellow:#F5E500;--yellow-glow:rgba(245,229,0,0.15);--yellow-dim:rgba(245,229,0,0.08);--purple:#1A0A3A;--purple-bright:#BB99FF;--purple-glow:rgba(187,153,255,0.12);--white:#FFFFFF;--grey:#8A8A9A;--border:rgba(255,255,255,0.07);--border-yellow:rgba(245,229,0,0.25);--border-purple:rgba(187,153,255,0.2);}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--white);font-family:'Anybody',sans-serif;overflow-x:hidden;cursor:none;}
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:0.5;}
-#cursor{width:10px;height:10px;background:var(--yellow);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference;}
-#cursor.grow{width:40px;height:40px;}
-.sparkle{position:absolute;pointer-events:none;animation:sparklePop 3s ease-in-out infinite;}
-@keyframes sparklePop{0%,100%{opacity:0.3;transform:scale(1) rotate(0deg);}50%{opacity:1;transform:scale(1.3) rotate(20deg);}}
-.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);animation:orbFloat 8s ease-in-out infinite;}
-@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-30px) scale(1.05);}}
-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:20px 60px;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.logo{font-family:'Cinzel Decorative',serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--white);}
-.logo em{color:var(--yellow);font-style:normal;}
-.nav-cta{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--black);background:var(--yellow);padding:10px 22px;text-decoration:none;transition:transform .15s,box-shadow .2s;}
-.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px var(--yellow-glow);}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 60px 80px;position:relative;overflow:hidden;}
-.hero-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(245,229,0,0.06);border:1px solid var(--border-yellow);padding:8px 18px;margin-bottom:32px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--yellow);width:fit-content;}
-.badge-dot{width:7px;height:7px;background:var(--yellow);border-radius:50%;animation:pulseDot 2s ease-in-out infinite;}
-@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.7);}}
-.hero-line{display:block;width:0;height:2px;background:linear-gradient(90deg,var(--yellow),transparent);margin-bottom:28px;transition:width 1.2s cubic-bezier(.16,1,.3,1);}
-.hero h1{font-size:clamp(52px,7.5vw,110px);font-weight:900;line-height:0.93;letter-spacing:-0.03em;text-transform:uppercase;max-width:960px;margin-bottom:40px;}
-.hero h1 em{color:var(--yellow);font-style:italic;display:block;}
-.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:48px;flex-wrap:wrap;max-width:1100px;}
-.hero-sub{font-size:17px;color:var(--grey);max-width:480px;line-height:1.7;font-weight:300;}
-.hero-sub strong{color:var(--white);font-weight:500;}
-.cta-btn{display:inline-block;background:var(--yellow);color:var(--black);font-family:'Anybody',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:18px 40px;text-decoration:none;white-space:nowrap;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s;}
-.cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);opacity:0;transition:opacity .2s;}
-.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--yellow-glow);}
-.cta-btn:hover::before{opacity:1;}
-.marquee-wrap{padding:20px 0;background:rgba(245,229,0,0.04);border-top:1px solid var(--border-yellow);border-bottom:1px solid var(--border-yellow);overflow:hidden;white-space:nowrap;}
-.marquee-track{display:inline-flex;animation:marquee 28s linear infinite;}
-.marquee-track:hover{animation-play-state:paused;}
-.marquee-item{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--yellow);opacity:0.7;padding:0 32px;display:flex;align-items:center;gap:32px;}
-.marquee-item::after{content:'';display:block;width:4px;height:4px;background:var(--yellow);border-radius:50%;opacity:0.5;}
-@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.section{padding:100px 60px;position:relative;overflow:hidden;}
-.section-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1;}
-.section-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:48px;display:flex;align-items:center;gap:14px;}
-.section-label::before{content:'';display:block;width:24px;height:1px;}
-.section-label.yellow{color:var(--yellow);}
-.section-label.yellow::before{background:var(--yellow);}
-.section-label.purple{color:var(--purple-bright);}
-.section-label.purple::before{background:var(--purple-bright);}
-.section-heading{font-size:clamp(36px,4.5vw,62px);font-weight:800;line-height:1.0;letter-spacing:-0.025em;text-transform:uppercase;margin-bottom:64px;}
-.section-heading em{color:var(--yellow);font-style:italic;}
-.diagnosis-bg{background:linear-gradient(135deg,var(--black-mid) 0%,#100820 100%);border-top:1px solid var(--border-purple);border-bottom:1px solid var(--border-purple);}
-.diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border-purple);}
-.diag-card{background:var(--black-mid);padding:44px;display:flex;gap:24px;transition:background .25s;position:relative;overflow:hidden;}
-.diag-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--purple-bright);transform:scaleY(0);transform-origin:bottom;transition:transform .3s ease;}
-.diag-card:hover{background:#130F20;}
-.diag-card:hover::before{transform:scaleY(1);}
-.diag-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--purple-bright);flex-shrink:0;padding-top:3px;opacity:0.7;}
-.diag-title{display:block;font-size:17px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em;}
-.diag-body{font-size:14px;color:var(--grey);line-height:1.65;font-weight:300;}
-.del-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
-.del-card{background:var(--black-card);padding:44px 36px;display:flex;flex-direction:column;gap:18px;position:relative;overflow:hidden;transition:background .25s,transform .25s;}
-.del-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--yellow),transparent);transform:scaleX(0);transition:transform .4s ease;}
-.del-card:hover{background:#141425;transform:translateY(-2px);}
-.del-card:hover::after{transform:scaleX(1);}
-.del-icon{width:44px;height:44px;border:1px solid var(--border-yellow);display:flex;align-items:center;justify-content:center;background:rgba(245,229,0,0.04);transition:background .2s,border-color .2s;}
-.del-card:hover .del-icon{background:rgba(245,229,0,0.1);border-color:var(--yellow);}
-.del-icon svg{width:18px;height:18px;stroke:var(--yellow);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-.del-title{font-size:17px;font-weight:700;letter-spacing:-0.01em;}
-.del-desc{font-size:13px;color:var(--grey);line-height:1.7;font-weight:300;flex:1;}
-.process-bg{background:linear-gradient(135deg,#0D0820 0%,var(--black-mid) 100%);border-top:1px solid var(--border-purple);border-bottom:1px solid var(--border-purple);}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
-.steps::before{content:'';position:absolute;top:32px;left:28px;right:28px;height:1px;background:linear-gradient(90deg,transparent,var(--border-purple),var(--border-purple),transparent);}
-.step{padding:0 28px 0 0;position:relative;z-index:1;}
-.step-num{width:64px;height:64px;background:var(--black);border:1px solid var(--border-purple);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:13px;color:var(--purple-bright);margin-bottom:28px;transition:border-color .3s,box-shadow .3s;}
-.step:hover .step-num{border-color:var(--purple-bright);box-shadow:0 0 20px rgba(187,153,255,0.2);}
-.step h3{font-size:16px;font-weight:700;margin-bottom:10px;}
-.step p{font-size:13px;color:var(--grey);line-height:1.65;font-weight:300;}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
-.stat-card{background:var(--black-card);padding:56px 48px;position:relative;overflow:hidden;text-align:center;}
-.stat-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(245,229,0,0.05) 0%,transparent 60%);}
-.stat-number{font-family:'Anybody',sans-serif;font-size:clamp(56px,6vw,88px);font-weight:900;color:var(--yellow);letter-spacing:-0.04em;line-height:1;margin-bottom:12px;position:relative;z-index:1;}
-.stat-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--grey);position:relative;z-index:1;}
-.price-section{background:var(--yellow);padding:100px 60px;position:relative;overflow:hidden;}
-.price-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1;}
-.price-left h2{font-size:clamp(38px,5vw,64px);font-weight:900;line-height:0.95;letter-spacing:-0.03em;text-transform:uppercase;color:var(--black);margin-bottom:20px;}
-.price-left p{font-size:16px;color:rgba(0,0,0,0.6);max-width:380px;line-height:1.65;}
-.price-tag{display:flex;align-items:baseline;gap:6px;margin-bottom:6px;}
-.price-sym{font-size:36px;font-weight:700;color:rgba(0,0,0,0.4);align-self:flex-start;margin-top:16px;}
-.price-amount{font-family:'Anybody',sans-serif;font-size:88px;font-weight:900;line-height:1;color:var(--black);letter-spacing:-0.04em;}
-.price-detail{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(0,0,0,0.45);}
-.price-right{display:flex;flex-direction:column;gap:24px;}
-.checklist{list-style:none;display:flex;flex-direction:column;gap:12px;margin:4px 0 8px;}
-.checklist li{font-size:14px;color:rgba(0,0,0,0.75);padding-left:28px;position:relative;}
-.checklist li::before{content:'✓';position:absolute;left:0;top:0;font-size:12px;font-weight:800;color:var(--black);}
-.price-cta{display:inline-block;background:var(--black);color:var(--yellow);font-family:'Anybody',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;padding:20px 44px;text-decoration:none;transition:transform .15s,box-shadow .2s;width:fit-content;}
-.price-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3);}
-.price-guarantee{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(0,0,0,0.4);}
-.about-bg{background:linear-gradient(135deg,#0D0820 0%,var(--black-mid) 100%);border-top:1px solid var(--border-purple);border-bottom:1px solid var(--border-purple);}
-.about-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:center;position:relative;z-index:1;}
-.about-frame{aspect-ratio:3/4;background:linear-gradient(135deg,#1a0a3a,#0d0820);border:1px solid var(--border-purple);position:relative;overflow:hidden;max-width:340px;}
-.about-frame::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(187,153,255,0.1),transparent 60%);}
-.about-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;color:var(--grey);text-transform:uppercase;}
-.about-badge{position:absolute;bottom:-1px;right:-1px;background:var(--yellow);color:var(--black);padding:12px 20px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;}
-.about-right h2{font-size:clamp(32px,3.5vw,50px);font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;margin-bottom:28px;}
-.about-right h2 em{color:var(--yellow);font-style:italic;}
-.about-right p{font-size:16px;color:var(--grey);line-height:1.75;font-weight:300;margin-bottom:20px;}
-.about-right p strong{color:var(--white);font-weight:500;}
-.faq-bg{background:var(--black-mid);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
-.faq-intro h2{font-size:clamp(32px,3.5vw,50px);font-weight:800;line-height:1.05;letter-spacing:-0.02em;text-transform:uppercase;margin-bottom:20px;}
-.faq-intro h2 em{color:var(--yellow);font-style:italic;}
-.faq-intro p{font-size:15px;color:var(--grey);line-height:1.7;font-weight:300;}
-.faq-list{display:flex;flex-direction:column;gap:1px;background:var(--border);}
-.faq-item{background:var(--black-card);}
-.faq-q{width:100%;padding:22px 28px;display:flex;justify-content:space-between;align-items:center;background:none;border:none;color:var(--white);font-family:'Anybody',sans-serif;font-size:15px;font-weight:600;text-align:left;cursor:pointer;gap:16px;transition:background .2s;}
-.faq-q:hover{background:rgba(255,255,255,0.03);}
-.faq-icon{width:24px;height:24px;flex-shrink:0;border:1px solid var(--border-yellow);display:flex;align-items:center;justify-content:center;color:var(--yellow);font-size:16px;font-weight:300;transition:transform .3s,background .2s;}
-.faq-item.open .faq-icon{transform:rotate(45deg);background:rgba(245,229,0,0.1);}
-.faq-a{padding:0 28px;max-height:0;overflow:hidden;font-size:14px;color:var(--grey);line-height:1.7;font-weight:300;transition:max-height .35s ease,padding .35s ease;}
-.faq-item.open .faq-a{max-height:200px;padding:0 28px 22px;}
-.final-bg{background:var(--black);text-align:center;padding:120px 60px;position:relative;overflow:hidden;}
-.final-inner{position:relative;z-index:1;}
-.final-inner h2{font-size:clamp(48px,7.5vw,100px);font-weight:900;line-height:0.9;letter-spacing:-0.04em;text-transform:uppercase;margin-bottom:28px;}
-.final-inner h2 em{color:var(--yellow);font-style:italic;display:block;}
-.final-inner p{font-size:17px;color:var(--grey);max-width:440px;margin:0 auto 48px;line-height:1.65;font-weight:300;}
-footer{padding:40px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
-footer .logo{opacity:0.5;}
-footer p{font-family:'DM Mono',monospace;font-size:11px;color:var(--grey);letter-spacing:0.05em;}
-.fade-up{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;}
-.fade-up.visible{opacity:1;transform:none;}
-.fade-up:nth-child(2){transition-delay:.1s;}
-.fade-up:nth-child(3){transition-delay:.2s;}
-.fade-up:nth-child(4){transition-delay:.3s;}
-.fade-up:nth-child(5){transition-delay:.15s;}
-.fade-up:nth-child(6){transition-delay:.25s;}
-@media(max-width:900px){
-  nav{padding:18px 24px;}
-  .hero{padding:120px 24px 72px;}
-  .section{padding:72px 24px;}
-  .diag-grid{grid-template-columns:1fr;}
-  .del-grid{grid-template-columns:1fr 1fr;}
-  .steps{grid-template-columns:1fr 1fr;gap:40px;}
-  .steps::before{display:none;}
-  .stats-grid{grid-template-columns:1fr 1fr 1fr;}
-  .price-inner{grid-template-columns:1fr;gap:48px;}
-  .price-section{padding:72px 24px;}
-  .about-inner{grid-template-columns:1fr;}
-  .about-frame{max-width:100%;aspect-ratio:4/3;}
-  .faq-grid{grid-template-columns:1fr;}
-  .final-bg{padding:80px 24px;}
-  footer{padding:32px 24px;}
-}
-@media(max-width:600px){
-  .hero h1{font-size:clamp(44px,12vw,72px);}
-  .del-grid{grid-template-columns:1fr;}
-  .steps{grid-template-columns:1fr;}
-  .stats-grid{grid-template-columns:1fr;}
-  .hero-bottom{flex-direction:column;align-items:flex-start;}
-  nav .nav-cta{display:none;}
-  .price-amount{font-size:64px;}
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0B0B0B;
+    --yellow: #F5E500;
+    --white: #FFFFFF;
+    --off-white: #F0EDE6;
+    --grey: #9A9A9A;
+    --dark-grey: #1A1A1A;
+    --mid-grey: #282828;
+    --purple-bg: #1A0A3A;
+    --purple-bg-mid: #160830;
+    --purple-bright: #BB99FF;
+    --purple-accent: #AA88FF;
+    --border: rgba(255,255,255,0.08);
+    --border-yellow: rgba(245,229,0,0.3);
+    --border-purple: rgba(187,153,255,0.25);
+    --purple-dim: rgba(187,153,255,0.15);
+    --yellow-dim: rgba(245,229,0,0.12);
+    --max-w: 1200px;
+  }
+
+  html { scroll-behavior: smooth; cursor: none; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 300;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── CURSOR ── */
+  #cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--yellow);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+    mix-blend-mode: difference;
+  }
+  #cursor.grow { width: 36px; height: 36px; }
+
+  /* ── GRAIN ── */
+  #grain {
+    position: fixed;
+    inset: -50%;
+    width: 200%; height: 200%;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: grain 0.5s steps(2) infinite;
+  }
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-2%, -3%); }
+    20% { transform: translate(3%, 2%); }
+    30% { transform: translate(-1%, 4%); }
+    40% { transform: translate(4%, -1%); }
+    50% { transform: translate(-3%, 1%); }
+    60% { transform: translate(2%, -4%); }
+    70% { transform: translate(-4%, 3%); }
+    80% { transform: translate(1%, -2%); }
+    90% { transform: translate(3%, 4%); }
+  }
+
+  /* ── FADE UP ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .section-label::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  /* ── SHARED ── */
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 48px; }
+  section { position: relative; }
+
+  h1, h2, h3 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.97;
+  }
+
+  em.yellow {
+    font-style: italic;
+    color: var(--yellow);
+  }
+
+  .body-text {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--grey);
+  }
+
+  .body-text strong { color: var(--white); font-weight: 500; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, var(--black) 0%, transparent 100%);
+  }
+
+  .logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--yellow); }
+
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--yellow);
+    color: var(--black);
+    border: none;
+    padding: 12px 22px;
+    cursor: none;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .nav-cta:hover {
+    background: var(--off-white);
+    transform: translateY(-2px);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 80px;
+    overflow: hidden;
+  }
+
+  .hero-ghost {
+    position: absolute;
+    bottom: -60px;
+    right: -40px;
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(200px, 28vw, 420px);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245, 229, 0, 0.07);
+    text-stroke: 1px rgba(245, 229, 0, 0.07);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--yellow);
+  }
+
+  .hero-headline {
+    font-size: clamp(56px, 8vw, 120px);
+    margin-bottom: 36px;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    max-width: 560px;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 36px;
+    right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--yellow), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+  @keyframes scroll-pulse {
+    0%, 100% { transform: scaleY(1); opacity: 0.6; }
+    50% { transform: scaleY(0.5); opacity: 1; }
+  }
+
+  /* ── DIAGNOSIS ── */
+  #diagnosis {
+    background: var(--purple-bg);
+    padding: 100px 48px;
+  }
+
+  #diagnosis .section-label { color: var(--purple-bright); }
+
+  #diagnosis h2 {
+    font-size: clamp(40px, 5.5vw, 80px);
+    margin-bottom: 64px;
+    max-width: 700px;
+  }
+
+  .diag-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-purple);
+  }
+
+  .diag-item {
+    background: var(--purple-bg);
+    padding: 48px;
+    transition: background 0.2s ease;
+    position: relative;
+  }
+  .diag-item:hover { background: var(--purple-bg-mid); }
+
+  .diag-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--purple-bright);
+    margin-bottom: 20px;
+  }
+
+  .diag-item h3 {
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    color: var(--white);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .diag-item p {
+    font-size: 15px;
+    color: var(--purple-accent);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── WHAT'S INCLUDED ── */
+  #included {
+    background: var(--black);
+    padding: 100px 48px;
+  }
+
+  #included .section-label { color: var(--yellow); }
+
+  #included h2 {
+    font-size: clamp(40px, 5.5vw, 80px);
+    margin-bottom: 64px;
+    max-width: 700px;
+  }
+
+  .included-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .included-item {
+    background: var(--black);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.2s ease;
+  }
+  .included-item:hover { background: var(--dark-grey); }
+
+  .included-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--yellow);
+    transition: width 0.4s ease;
+  }
+  .included-item:hover::before { width: 100%; }
+
+  .item-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--border-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .item-icon svg { width: 20px; height: 20px; stroke: var(--yellow); fill: none; stroke-width: 1.5; }
+
+  .included-item h3 {
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    margin-bottom: 12px;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .included-item p {
+    font-size: 14px;
+    color: var(--grey);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── HOW IT WORKS ── */
+  #how {
+    background: var(--purple-bg);
+    padding: 100px 48px;
+  }
+
+  #how .section-label { color: var(--purple-bright); }
+
+  #how h2 {
+    font-size: clamp(40px, 5.5vw, 80px);
+    margin-bottom: 64px;
+    max-width: 700px;
+  }
+
+  .steps-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .steps-row::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 1px;
+    background: var(--border-purple);
+  }
+
+  .step {
+    padding: 0 24px 0 0;
+    position: relative;
+  }
+
+  .step-num {
+    width: 56px; height: 56px;
+    border: 1px solid var(--border-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--purple-bright);
+    letter-spacing: 0.1em;
+    margin-bottom: 28px;
+    background: var(--purple-bg);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: var(--white);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0;
+  }
+
+  .step p {
+    font-size: 14px;
+    color: var(--purple-accent);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── PRICE ── */
+  #price {
+    background: var(--yellow);
+    padding: 100px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-ghost {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(160px, 22vw, 340px);
+    line-height: 1;
+    color: rgba(0,0,0,0.04);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+  }
+
+  .price-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  #price .section-label { color: rgba(0,0,0,0.4); }
+  #price .section-label::after { background: rgba(0,0,0,0.3); }
+
+  #price h2 {
+    font-size: clamp(40px, 5vw, 72px);
+    color: var(--black);
+    margin-bottom: 24px;
+  }
+
+  #price .body-text { color: rgba(0,0,0,0.6); }
+
+  .price-card {
+    background: rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.12);
+    padding: 48px;
+  }
+
+  .price-figure {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: clamp(64px, 8vw, 96px);
+    color: var(--black);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 8px;
+  }
+
+  .price-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.45);
+    margin-bottom: 32px;
+  }
+
+  .price-checklist {
+    list-style: none;
+    margin-bottom: 36px;
+  }
+
+  .price-checklist li {
+    font-family: 'Anybody', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0,0,0,0.8);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .price-checklist li::before {
+    content: '';
+    width: 16px; height: 16px;
+    border: 1px solid rgba(0,0,0,0.4);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='black' stroke-width='1.5' fill='none' stroke-linecap='square'/%3E%3C/svg%3E") center/10px no-repeat;
+  }
+
+  .price-cta {
+    display: block;
+    width: 100%;
+    background: var(--black);
+    color: var(--yellow);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 18px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 16px;
+    cursor: none;
+  }
+  .price-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .guarantee {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.4);
+    text-align: center;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--purple-bg);
+    padding: 100px 48px;
+  }
+
+  #about .section-label { color: var(--purple-bright); }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .photo-wrap {
+    position: relative;
+    aspect-ratio: 3/4;
+    background: var(--purple-bg-mid);
+    border: 1px solid var(--border-purple);
+    overflow: hidden;
+  }
+
+  .photo-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(20%);
+  }
+
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--purple-accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+
+  .photo-placeholder svg { width: 40px; height: 40px; stroke: var(--purple-accent); fill: none; opacity: 0.5; }
+
+  .photo-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+  }
+
+  .about-right h2 {
+    font-size: clamp(36px, 4.5vw, 64px);
+    margin-bottom: 32px;
+    margin-top: 28px;
+  }
+
+  .about-right p {
+    font-size: 16px;
+    color: var(--purple-accent);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border-purple);
+    margin-top: 48px;
+  }
+
+  .stat-item {
+    background: var(--purple-bg-mid);
+    padding: 28px 24px;
+  }
+
+  .stat-num {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    color: var(--purple-bright);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--purple-accent);
+  }
+
+  /* ── FINAL CTA ── */
+  #final-cta {
+    background: var(--black);
+    padding: 140px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(245,229,0,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #final-cta h2 {
+    font-size: clamp(52px, 8vw, 120px);
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+  }
+
+  #final-cta .body-text {
+    max-width: 480px;
+    margin: 0 auto 48px;
+    font-size: 17px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 20px 48px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    z-index: 2;
+    cursor: none;
+  }
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(245,229,0,0.2);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 36px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo { font-size: 13px; }
+
+  .copyright {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--grey);
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .container { padding: 0 24px; }
+
+    #diagnosis, #included, #how, #price, #about, #included, #final-cta { padding: 72px 24px; }
+    footer { padding: 28px 24px; }
+
+    .diag-grid { grid-template-columns: 1fr; }
+    .included-grid { grid-template-columns: 1fr 1fr; }
+    .steps-row { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .steps-row::before { display: none; }
+    .price-inner { grid-template-columns: 1fr; gap: 48px; }
+    .about-inner { grid-template-columns: 1fr; gap: 48px; }
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .hero-ghost { font-size: 160px; bottom: 20px; right: -20px; }
+    .hero-headline { font-size: clamp(48px, 10vw, 80px); }
+    .scroll-indicator { right: 24px; }
+  }
+
+  @media (max-width: 600px) {
+    .included-grid { grid-template-columns: 1fr; }
+    .steps-row { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .hero-ghost { display: none; }
+  }
 </style>
 </head>
 <body>
-<div id="cursor"></div>
 
+<div id="cursor"></div>
+<div id="grain"></div>
+
+<!-- NAV -->
 <nav>
-  <a href="/" class="logo">Two<em>Hoots</em> Digital</a>
-  <a href="#get-audit" class="nav-cta">Book the audit</a>
+  <a href="#" class="logo">Two<span>Hoots</span> Digital</a>
+  <a href="#price" class="nav-cta">Get the audit</a>
 </nav>
 
-<section class="hero">
-  <div class="orb" style="width:600px;height:600px;background:radial-gradient(circle,rgba(187,153,255,0.13) 0%,transparent 70%);top:-100px;right:-100px;animation-delay:0s;"></div>
-  <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(245,229,0,0.07) 0%,transparent 70%);bottom:50px;left:-80px;animation-delay:4s;"></div>
-  <div class="sparkle" style="top:18%;right:22%;animation-delay:0s;"><svg width="16" height="16" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
-  <div class="sparkle" style="top:38%;right:12%;animation-delay:1.5s;"><svg width="10" height="10" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
-  <div class="sparkle" style="bottom:28%;right:28%;animation-delay:.8s;"><svg width="12" height="12" viewBox="0 0 24 24" stroke="#BB99FF" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
-  <div class="hero-badge"><span class="badge-dot"></span>Ad + Shopify Audit &nbsp;&middot;&nbsp; &pound;397 flat fee</div>
-  <span class="hero-line" id="heroLine"></span>
-  <h1>You're not bad at ads.<br>Your store is losing<em>the sale.</em></h1>
-  <div class="hero-bottom">
-    <p class="hero-sub"><strong>Sound familiar?</strong> You're spending real money on Meta ads. People are clicking. And then nothing. The ad isn't the problem. Something between the click and the checkout is killing the sale. I find it, tell you exactly what it is, and give you a fix list in order of impact. No waffle. No 40-page PDF. Just answers.</p>
-    <a href="#get-audit" class="cta-btn">Fix the leak &mdash; &pound;397 &rarr;</a>
+<!-- HERO -->
+<section id="hero">
+  <div class="container" style="position:relative;">
+    <div class="hero-ghost">£397</div>
+    <div class="hero-content">
+      <div class="hero-tag fade-up">Ad + Shopify Audit</div>
+      <h1 class="hero-headline fade-up">
+        Your ads work.<br>
+        Your store<br>
+        <em class="yellow">doesn't.</em>
+      </h1>
+      <p class="body-text hero-sub fade-up">
+        Meta says your campaigns are performing. But the sales aren't landing. The problem isn't your ads — it's the gap between the click and the checkout. We find it and fix it.
+      </p>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
   </div>
 </section>
 
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span class="marquee-item">Meta Ads Audit</span><span class="marquee-item">Shopify CRO</span><span class="marquee-item">Conversion Rate Fix</span><span class="marquee-item">3 Day Turnaround</span><span class="marquee-item">&pound;397 Flat Fee</span><span class="marquee-item">Loom Walkthrough</span><span class="marquee-item">Action Checklist</span><span class="marquee-item">Find the Leak</span><span class="marquee-item">Meta Ads Audit</span><span class="marquee-item">Shopify CRO</span><span class="marquee-item">Conversion Rate Fix</span><span class="marquee-item">3 Day Turnaround</span><span class="marquee-item">&pound;397 Flat Fee</span><span class="marquee-item">Loom Walkthrough</span><span class="marquee-item">Action Checklist</span><span class="marquee-item">Find the Leak</span>
-  </div>
-</div>
-
-<section class="section diagnosis-bg">
-  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(187,153,255,0.09) 0%,transparent 70%);top:-80px;right:-80px;animation-delay:2s;"></div>
-  <div class="sparkle" style="top:12%;left:6%;animation-delay:1s;"><svg width="14" height="14" viewBox="0 0 24 24" stroke="#BB99FF" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
-  <div class="section-inner">
-    <div class="section-label purple">If any of this sounds like you, read on.</div>
-    <h2 class="section-heading">If any of this sounds<br>like you, <em>read on.</em></h2>
+<!-- DIAGNOSIS -->
+<section id="diagnosis">
+  <div class="container">
+    <div class="section-label fade-up">Sound familiar?</div>
+    <h2 class="fade-up">
+      You're spending<br>
+      money.<br>
+      <em class="yellow">Not seeing results.</em>
+    </h2>
     <div class="diag-grid">
-      <div class="diag-card fade-up"><span class="diag-num">01</span><div><strong class="diag-title">Meta says you're winning. Your bank account says otherwise.</strong><p class="diag-body">Meta's dashboard says your ROAS is great. But when you look at your actual revenue, it doesn't add up. You're not imagining it. Meta's attribution is broken and your store is losing sales it should be closing.</p></div></div>
-      <div class="diag-card fade-up"><span class="diag-num">02</span><div><strong class="diag-title">Loads of visitors. Not enough buyers.</strong><p class="diag-body">The traffic's there. The clicks are there. The sales aren't. A high bounce rate or abandoned cart means your landing page is doing the hard work of a bad salesperson. Sending people away right when they're ready to buy.</p></div></div>
-      <div class="diag-card fade-up"><span class="diag-num">03</span><div><strong class="diag-title">You've tried everything. It's still not working.</strong><p class="diag-body">New creative. New audience. New budget. Same result. You've been optimising the ad when the problem has been the page all along. It's one of the most expensive mistakes in ecommerce.</p></div></div>
-      <div class="diag-card fade-up"><span class="diag-num">04</span><div><strong class="diag-title">You know something's wrong. You just don't know what.</strong><p class="diag-body">Spending more on ads while the leak is still there is like running a bath with the plug out. Let's find the plug.</p></div></div>
+      <div class="diag-item fade-up">
+        <div class="diag-num">01</div>
+        <h3>Good ROAS, bad revenue</h3>
+        <p>Meta says 4x return. Your bank account disagrees. The numbers look fine until you look closer.</p>
+      </div>
+      <div class="diag-item fade-up">
+        <div class="diag-num">02</div>
+        <h3>Traffic but no conversions</h3>
+        <p>People are landing on your store. They're not buying. Something between the ad and the checkout is killing the sale.</p>
+      </div>
+      <div class="diag-item fade-up">
+        <div class="diag-num">03</div>
+        <h3>You've changed the creative, the copy, the targeting</h3>
+        <p>Tweaked everything you can think of. Still the same results. Because the problem isn't the ad.</p>
+      </div>
+      <div class="diag-item fade-up">
+        <div class="diag-num">04</div>
+        <h3>You don't know where it's breaking</h3>
+        <p>The data tells you something's wrong. It doesn't tell you what to actually do about it.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="section-inner">
-    <div class="section-label yellow">What's included</div>
-    <h2 class="section-heading">A full <em>diagnosis</em><br>and a fix list.</h2>
-    <div class="del-grid">
-      <div class="del-card fade-up"><div class="del-icon"><svg viewBox="0 0 24 24"><path d="M9 19V6l12-3v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="15" r="3"/></svg></div><div class="del-title">Your Meta ads, properly assessed</div><p class="del-desc">I look at your actual campaigns, not just the headline numbers. Structure, audiences, creatives, budget split. I'll tell you what's wasting money and what's worth scaling.</p></div>
-      <div class="del-card fade-up"><div class="del-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></div><div class="del-title">Your Shopify store, page by page</div><p class="del-desc">Landing pages, product pages, cart, checkout. I follow the exact path a customer takes after clicking your ad and find every point where they're dropping off.</p></div>
-      <div class="del-card fade-up"><div class="del-icon"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div><div class="del-title">A Loom video so nothing gets lost</div><p class="del-desc">I record a 10-15 minute walkthrough of everything I found. Watch it with your team, pause it, rewatch it. No trying to decipher a written report on your own.</p></div>
-      <div class="del-card fade-up"><div class="del-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="del-title">A fix list you can actually act on</div><p class="del-desc">Fixes ordered by impact, not by how easy they are to explain. You'll know what to do first, what to do next, and roughly what difference each one should make.</p></div>
-      <div class="del-card fade-up"><div class="del-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="del-title">A call if you want one</div><p class="del-desc">30 minutes to go through the findings together. Ask me anything. Most clients want this. It's optional but it usually leads to a few extra light-bulb moments.</p></div>
-      <div class="del-card fade-up"><div class="del-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="del-title">Back with you in 3 working days</div><p class="del-desc">Not 3 weeks. Not "we'll be in touch". Three working days from the moment I get access, you have everything in your inbox.</p></div>
+<!-- WHAT'S INCLUDED -->
+<section id="included">
+  <div class="container">
+    <div class="section-label fade-up">What's included</div>
+    <h2 class="fade-up">
+      A full <em class="yellow">diagnosis</em><br>
+      and a fix list.
+    </h2>
+    <div class="included-grid">
+      <div class="included-item fade-up">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 3h18v4H3zM3 11h18v4H3zM3 19h18v2H3z"/></svg>
+        </div>
+        <h3>Meta Ads Review</h3>
+        <p>Campaign structure, audience targeting, creative performance, budget allocation. We look at what's actually running and what it's actually doing.</p>
+      </div>
+      <div class="included-item fade-up">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+        </div>
+        <h3>Shopify Store Audit</h3>
+        <p>Landing pages, product pages, cart, checkout. Every step a customer takes after clicking your ad — we find where they're dropping off and why.</p>
+      </div>
+      <div class="included-item fade-up">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l6 3.5-6 3.5V8.5z"/></svg>
+        </div>
+        <h3>Loom Walkthrough</h3>
+        <p>A recorded 10–15 minute video walking you through exactly what we found, what it means, and what to do first.</p>
+      </div>
+      <div class="included-item fade-up">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3 5-6"/><rect x="3" y="4" width="18" height="17"/></svg>
+        </div>
+        <h3>Priority Action Checklist</h3>
+        <p>A written list of fixes, ordered by impact. No vague advice — specific changes, specific reasons, specific expected outcomes.</p>
+      </div>
+      <div class="included-item fade-up">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <h3>30-Minute Follow-Up Call</h3>
+        <p>Optional Zoom to go through the findings together, ask questions, and get absolute clarity on what to tackle first.</p>
+      </div>
+      <div class="included-item fade-up">
+        <div class="item-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>
+        </div>
+        <h3>3 Business Day Turnaround</h3>
+        <p>You'll have everything within 3 working days of access being granted. No waiting weeks for a report that's already out of date.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section process-bg">
-  <div class="orb" style="width:600px;height:600px;background:radial-gradient(circle,rgba(187,153,255,0.07) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:1s;"></div>
-  <div class="section-inner">
-    <div class="section-label purple">How it works</div>
-    <h2 class="section-heading">Simple.<br>Fast. <span style="color:var(--yellow)">Done.</span></h2>
-    <div class="steps">
-      <div class="step fade-up"><div class="step-num">01</div><h3>Book &amp; pay</h3><p>Secure your spot. You'll get a confirmation and a short onboarding form straight away.</p></div>
-      <div class="step fade-up"><div class="step-num">02</div><h3>Grant access</h3><p>Share read-only access to your Meta Ads Manager and Shopify. Takes five minutes.</p></div>
-      <div class="step fade-up"><div class="step-num">03</div><h3>I dig in</h3><p>Full review of your ads and store. I look at everything, not just the obvious stuff.</p></div>
-      <div class="step fade-up"><div class="step-num">04</div><h3>You get answers</h3><p>Loom, checklist, and optional Zoom. All in your inbox within 3 working days.</p></div>
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="section-label fade-up">How it works</div>
+    <h2 class="fade-up">
+      Simple.<br>
+      Fast.<br>
+      <em class="yellow">Done.</em>
+    </h2>
+    <div class="steps-row">
+      <div class="step fade-up">
+        <div class="step-num">01</div>
+        <h3>Book &amp; pay</h3>
+        <p>Secure your spot. You'll get a confirmation and a short onboarding form straight away.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">02</div>
+        <h3>Grant access</h3>
+        <p>Share read-only access to your Meta Ads Manager and Shopify. Takes five minutes.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">03</div>
+        <h3>We dig in</h3>
+        <p>Full review of your ads and store. We look at everything — not just the obvious stuff.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">04</div>
+        <h3>You get answers</h3>
+        <p>Loom video, action checklist, and optional Zoom — all delivered within 3 business days.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="section-inner">
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-number" data-target="100" data-suffix="+">0+</div><div class="stat-label">Accounts reviewed</div></div>
-      <div class="stat-card"><div class="stat-number" data-target="3" data-suffix="">0</div><div class="stat-label">Day turnaround</div></div>
-      <div class="stat-card"><div class="stat-number" data-target="397" data-prefix="&pound;">£0</div><div class="stat-label">Flat fee, no surprises</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="price-section" id="get-audit">
-  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(0,0,0,0.08) 0%,transparent 70%);top:-100px;right:-50px;animation-delay:0s;"></div>
-  <div class="price-inner">
-    <div class="price-left">
-      <p style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(0,0,0,.4);margin-bottom:40px;">Is it worth &pound;397?</p>
-      <h2>Most clients make it back from one fix.</h2>
-      <p>If your store converts at 1% and we find quick wins that take it to 1.5%, on &pound;10k/month ad spend that's thousands in extra revenue. The audit pays for itself. Usually pretty quickly.</p>
-    </div>
-    <div class="price-right">
+<!-- PRICE -->
+<section id="price">
+  <div class="price-ghost">£397</div>
+  <div class="container">
+    <div class="price-inner">
       <div>
-        <div class="price-tag"><span class="price-sym">&pound;</span><span class="price-amount">397</span></div>
-        <p class="price-detail">One-time payment &nbsp;&middot;&nbsp; No monthly fees</p>
+        <div class="section-label fade-up">Investment</div>
+        <h2 class="fade-up">
+          Stop guessing.<br>
+          Start fixing.
+        </h2>
+        <p class="body-text fade-up">
+          One audit. One clear picture of where your money is going and what's blocking the sales. Everything you need to make a decision — nothing you don't.
+        </p>
       </div>
-      <ul class="checklist">
-        <li>Meta Ads + Shopify full audit</li>
-        <li>Recorded Loom walkthrough</li>
-        <li>Written priority action checklist</li>
-        <li>Optional 30-min follow-up Zoom</li>
-        <li>Delivered in 3 business days</li>
-      </ul>
-      <div style="display:flex;flex-direction:column;gap:12px;">
-        <a href="#" class="price-cta">Yes, I want answers &rarr;</a>
-        <p class="price-guarantee">Read-only access. No changes made without your say-so.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section about-bg">
-  <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(187,153,255,0.08) 0%,transparent 70%);top:-50px;right:-50px;animation-delay:1s;"></div>
-  <div class="about-inner">
-    <div>
-      <div class="about-frame">
-        <div class="about-placeholder">Your photo here</div>
-        <div class="about-badge">Ads &amp; Shopify Specialist</div>
-      </div>
-    </div>
-    <div class="about-right">
-      <div class="section-label purple" style="margin-bottom:32px;">Who's behind this</div>
-      <h2>Hi, I'm Julia.<br><em>I fix leaky funnels.</em></h2>
-      <p>I run Two Hoots Digital. Meta ads, Shopify builds, and CRO. That's it. I do those three things very well, and I've spent years watching brands throw money at ads while their stores quietly sabotaged every single click.</p>
-      <p>I'm pretty blunt. If your product page is terrible, I'll tell you. If your ads are structured wrong, I'll tell you that too. What I won't do is write you a fluffy report that dances around the problem. <strong>You get the truth, a fix list, and a Loom walking you through it.</strong> That's what you're paying for.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section faq-bg">
-  <div class="section-inner">
-    <div class="faq-grid">
-      <div class="faq-intro">
-        <div class="section-label yellow">Questions</div>
-        <h2 class="section-heading" style="margin-bottom:20px;">Things people<br>usually <em>ask me.</em></h2>
-        <p>If you've got a question that isn't here, just email me. I'm pretty quick to reply.</p>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item open">
-          <button class="faq-q">What exactly do you look at in the audit?<span class="faq-icon">+</span></button>
-          <div class="faq-a">Your Meta Ads Manager (campaigns, ad sets, creatives, audiences, budget) and your Shopify store (landing pages, product pages, cart, checkout). I follow the customer journey from click to purchase and document every friction point along the way.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Do you need to make any changes to my accounts?<span class="faq-icon">+</span></button>
-          <div class="faq-a">No. I only need read-only access. I won't touch, change, or pause anything without your explicit say-so. The audit is purely observational.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">How long does it actually take?<span class="faq-icon">+</span></button>
-          <div class="faq-a">Three working days from the moment you grant access. Not three weeks. You'll have the Loom, the checklist, and the full write-up in your inbox within 72 working hours.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">What if I want help implementing the fixes?<span class="faq-icon">+</span></button>
-          <div class="faq-a">That's what a lot of clients come back for. Once you've seen the audit, we can talk about ongoing ads management, Shopify tweaks, or a full CRO project. No obligation, but the option is there.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q">Is &pound;397 worth it?<span class="faq-icon">+</span></button>
-          <div class="faq-a">If your store converts at 1% and we find fixes that take it to 1.5%, on &pound;10k/month ad spend that's an extra &pound;50k/year in revenue. The audit pays for itself many times over. Most clients think it's underpriced.</div>
-        </div>
+      <div class="price-card fade-up">
+        <div class="price-figure">£397</div>
+        <div class="price-detail">One-time payment · No monthly fees</div>
+        <ul class="price-checklist">
+          <li>Meta Ads + Shopify full audit</li>
+          <li>Recorded Loom walkthrough</li>
+          <li>Written priority action checklist</li>
+          <li>Optional 30-min follow-up Zoom</li>
+          <li>Delivered in 3 business days</li>
+        </ul>
+        <a href="#" class="price-cta">Book your audit →</a>
+        <div class="guarantee">Secure payment · Read-only access only</div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="final-bg">
-  <div class="orb" style="width:700px;height:700px;background:radial-gradient(circle,rgba(245,229,0,0.07) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:0s;"></div>
-  <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(187,153,255,0.07) 0%,transparent 70%);top:0;right:10%;animation-delay:3s;"></div>
-  <div class="sparkle" style="top:22%;left:16%;animation-delay:.5s;"><svg width="16" height="16" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
-  <div class="sparkle" style="top:32%;right:16%;animation-delay:1.8s;"><svg width="10" height="10" viewBox="0 0 24 24" stroke="#BB99FF" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
-  <div class="final-inner">
-    <h2>Still spending money<em>on a broken funnel?</em></h2>
-    <p>For &pound;397 you'll know exactly where you're losing sales and what to do about it. Most clients make that back from one conversion improvement.</p>
-    <a href="#get-audit" class="cta-btn">Book your audit &mdash; &pound;397 &rarr;</a>
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div>
+        <div class="photo-wrap fade-up">
+          <div class="photo-placeholder">
+            <svg viewBox="0 0 24 24" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>Your photo here</span>
+          </div>
+          <div class="photo-badge">Ads &amp; Shopify Specialist</div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="section-label fade-up">Who's behind this</div>
+        <h2 class="fade-up">
+          Ads expertise.<br>
+          <em class="yellow">Real results.</em>
+        </h2>
+        <p class="fade-up">I'm a Meta ads specialist with a reputation for finding the leaks other people miss. I've worked with ecommerce brands who had perfectly good ad campaigns that were bleeding money because of what happened after the click.</p>
+        <p class="fade-up">Most audits tell you what's wrong. Mine tells you what to fix, in what order, and why it'll make a difference. You'll leave with a clear action list, not a 40-page PDF you'll never read.</p>
+        <div class="stats-grid fade-up">
+          <div class="stat-item">
+            <div class="stat-num">100+</div>
+            <div class="stat-label">Accounts reviewed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Day turnaround</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">£397</div>
+            <div class="stat-label">Flat fee, no surprises</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- FINAL CTA -->
+<section id="final-cta">
+  <div class="cta-glow"></div>
+  <div class="container">
+    <h2 class="fade-up">
+      Know exactly<br>
+      <em class="yellow">what's broken.</em>
+    </h2>
+    <p class="body-text fade-up">Stop tweaking ads that aren't the problem. Get the audit and find out what actually is.</p>
+    <a href="#price" class="cta-btn fade-up">Book your audit — £397 →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <a href="/" class="logo">Two<em>Hoots</em> Digital</a>
-  <p>&copy; 2026 Two Hoots Digital. All rights reserved.</p>
+  <a href="#" class="logo">Two<span>Hoots</span> Digital</a>
+  <div class="copyright">© 2026 Two Hoots Digital. All rights reserved.</div>
 </footer>
 
 <script>
-const cursor=document.getElementById('cursor');
-let mx=0,my=0,cx=0,cy=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-document.querySelectorAll('a,button,.del-card,.diag-card,.step,.stat-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cursor.classList.add('grow'));
-  el.addEventListener('mouseleave',()=>cursor.classList.remove('grow'));
-});
-(function loop(){cx+=(mx-cx)*.15;cy+=(my-cy)*.15;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(loop)})();
-setTimeout(()=>{const l=document.getElementById('heroLine');if(l)l.style.width='120px';},600);
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}});},{threshold:0.1});
-document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
-const statObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const el=e.target;
-      const target=+el.dataset.target;
-      const prefix=el.dataset.prefix||'';
-      const suffix=el.dataset.suffix||'';
-      let cur=0;const inc=target/80;
-      const t=setInterval(()=>{cur=Math.min(cur+inc,target);el.textContent=prefix+Math.floor(cur)+suffix;if(cur>=target)clearInterval(t);},16);
-      statObs.unobserve(el);
-    }
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
   });
-},{threshold:0.5});
-document.querySelectorAll('.stat-number').forEach(el=>statObs.observe(el));
-document.querySelectorAll('.faq-q').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const item=btn.parentElement;
-    const isOpen=item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
-    if(!isOpen)item.classList.add('open');
+
+  function animateCursor() {
+    curX += (mouseX - curX) * 0.15;
+    curY += (mouseY - curY) * 0.15;
+    cursor.style.left = curX + 'px';
+    cursor.style.top = curY + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('a, button, .diag-item, .included-item, .step, .price-cta, .cta-btn, .nav-cta').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
   });
-});
-const lblObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';lblObs.unobserve(x.target);}});},{threshold:0.2});
-document.querySelectorAll('.section-label').forEach(el=>{el.style.opacity='0';el.style.transition='opacity .6s ease .1s';lblObs.observe(el);});
+
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
