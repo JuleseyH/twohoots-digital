@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Guide: Why Your Shopify Store Is Losing The Sale | Two Hoots Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Anybody:ital,wght@0,100..900;1,100..900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0B0B0B;
+    --yellow: #F5E500;
+    --white: #FFFFFF;
+    --off-white: #F0EDE6;
+    --grey: #9A9A9A;
+    --dark-grey: #1A1A1A;
+    --mid-grey: #282828;
+    --purple-bg: #1A0A3A;
+    --purple-bg-mid: #160830;
+    --purple-bright: #BB99FF;
+    --purple-accent: #AA88FF;
+    --border: rgba(255,255,255,0.08);
+    --border-yellow: rgba(245,229,0,0.3);
+    --border-purple: rgba(187,153,255,0.25);
+    --yellow-dim: rgba(245,229,0,0.12);
+    --max-w: 1200px;
+  }
+
+  html { scroll-behavior: smooth; cursor: none; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 300;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  /* ── CURSOR ── */
+  #cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--yellow);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+    mix-blend-mode: difference;
+  }
+  #cursor.grow { width: 36px; height: 36px; }
+
+  /* ── FADE UP ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+  /* Hero animates on load */
+  #hero .fade-up { animation: fadeUpIn 0.7s ease forwards; opacity: 0; }
+  #hero .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  #hero .fade-up:nth-child(2) { animation-delay: 0.25s; transition-delay: 0; }
+  #hero .fade-up:nth-child(3) { animation-delay: 0.4s; transition-delay: 0; }
+  #hero .fade-up:nth-child(4) { animation-delay: 0.55s; transition-delay: 0; }
+  @keyframes fadeUpIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SHARED ── */
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 48px; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--border-yellow);
+  }
+  .section-label.purple {
+    color: var(--purple-bright);
+  }
+  .section-label.purple::after {
+    background: var(--border-purple);
+  }
+
+  .accent { color: var(--yellow); font-style: italic; }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--black);
+    color: var(--yellow);
+    font-family: 'Anybody', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 20px 44px;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .cta-btn:hover {
+    background: #111;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(11,11,11,0.95) 0%, transparent 100%);
+  }
+
+  .logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo em { font-style: normal; color: var(--yellow); }
+
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--yellow);
+    color: var(--black);
+    padding: 10px 20px;
+    text-decoration: none;
+    cursor: none;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .nav-cta:hover {
+    background: var(--off-white);
+    transform: translateY(-1px);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-ghost {
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(200px, 28vw, 460px);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245,229,0,0.07);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+  }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--yellow);
+    flex-shrink: 0;
+  }
+
+  .hero-headline {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 7vw, 96px);
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.97;
+    margin-bottom: 36px;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--grey);
+    max-width: 480px;
+    line-height: 1.65;
+    margin-bottom: 48px;
+  }
+  .hero-sub strong { color: var(--white); font-weight: 500; }
+
+  /* ── INLINE OPT-IN FORM ── */
+  .opt-in-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 480px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .opt-in-form input[type="text"],
+  .opt-in-form input[type="email"] {
+    background: var(--black);
+    border: 1px solid var(--border-yellow);
+    color: var(--white);
+    font-family: 'Anybody', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 16px 20px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s ease;
+    cursor: none;
+  }
+  .opt-in-form input::placeholder { color: rgba(255,255,255,0.3); }
+  .opt-in-form input:focus { border-color: var(--yellow); }
+
+  .form-submit {
+    display: block;
+    width: 100%;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Anybody', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 20px;
+    border: none;
+    cursor: none;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .form-submit:hover {
+    background: var(--off-white);
+    transform: translateY(-2px);
+  }
+
+  .form-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-top: 4px;
+  }
+
+  /* ── WHAT'S INSIDE ── */
+  #whats-inside {
+    background: var(--purple-bg);
+    padding: 100px 48px;
+    border-top: 1px solid var(--border-purple);
+    border-bottom: 1px solid var(--border-purple);
+  }
+
+  #whats-inside h2 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: clamp(36px, 5vw, 64px);
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    line-height: 1.0;
+    margin-bottom: 16px;
+  }
+
+  .inside-intro {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--purple-accent);
+    max-width: 560px;
+    line-height: 1.65;
+    margin-bottom: 56px;
+  }
+
+  .inside-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border-purple);
+  }
+
+  .inside-item {
+    background: var(--purple-bg);
+    padding: 40px 44px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    transition: background 0.2s ease;
+  }
+  .inside-item:hover { background: var(--purple-bg-mid); }
+
+  .inside-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--purple-bright);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .inside-text h3 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--white);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .inside-text p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--grey);
+    line-height: 1.65;
+  }
+
+  /* ── WHO IT'S FOR ── */
+  #who {
+    background: var(--black);
+    padding: 100px 48px;
+  }
+
+  .who-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  #who h2 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: clamp(36px, 4.5vw, 60px);
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    line-height: 1.0;
+    margin-bottom: 28px;
+  }
+
+  #who p {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--grey);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+  #who p strong { color: var(--white); font-weight: 500; }
+
+  .who-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .who-list li {
+    background: var(--black);
+    padding: 20px 24px;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--grey);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    line-height: 1.5;
+    transition: background 0.2s ease;
+  }
+  .who-list li:hover { background: var(--dark-grey); }
+
+  .who-list li::before {
+    content: '';
+    width: 16px; height: 16px;
+    border: 1px solid var(--border-yellow);
+    flex-shrink: 0;
+    margin-top: 2px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='8' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' stroke='%23F5E500' stroke-width='1.5' fill='none' stroke-linecap='square'/%3E%3C/svg%3E") center/10px no-repeat;
+  }
+
+  /* ── SOCIAL PROOF ── */
+  #proof {
+    background: var(--dark-grey);
+    padding: 100px 48px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .proof-item {
+    background: var(--dark-grey);
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proof-quote {
+    font-family: 'Anybody', sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+  .proof-quote strong { font-weight: 600; font-style: normal; color: var(--yellow); }
+
+  .proof-attr {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .proof-name {
+    font-family: 'Anybody', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .proof-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .proof-item::before {
+    content: '\201C';
+    position: absolute;
+    top: 24px; right: 32px;
+    font-family: 'Anybody', sans-serif;
+    font-size: 120px;
+    font-weight: 900;
+    color: rgba(245,229,0,0.05);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* ── SECOND CTA ── */
+  #second-cta {
+    background: var(--black);
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #second-cta::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(245,229,0,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  #second-cta h2 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: clamp(40px, 6vw, 80px);
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.97;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+  }
+
+  #second-cta p {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--grey);
+    max-width: 440px;
+    margin: 0 auto 48px;
+    line-height: 1.65;
+    position: relative;
+    z-index: 2;
+  }
+
+  .second-cta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 440px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .second-cta-form input[type="text"],
+  .second-cta-form input[type="email"] {
+    background: var(--black);
+    border: 1px solid var(--border-yellow);
+    color: var(--white);
+    font-family: 'Anybody', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 16px 20px;
+    outline: none;
+    width: 100%;
+    text-align: center;
+    transition: border-color 0.2s ease;
+    cursor: none;
+  }
+  .second-cta-form input::placeholder { color: rgba(255,255,255,0.3); }
+  .second-cta-form input:focus { border-color: var(--yellow); }
+
+  .second-cta-form .form-submit {
+    width: 100%;
+  }
+
+  /* ── ABOUT ── */
+  #about {
+    background: var(--purple-bg);
+    padding: 100px 48px;
+    border-top: 1px solid var(--border-purple);
+    border-bottom: 1px solid var(--border-purple);
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  .about-photo-frame {
+    aspect-ratio: 3/4;
+    background: var(--purple-bg-mid);
+    border: 1px solid var(--border-purple);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--purple-accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .photo-placeholder svg {
+    width: 36px; height: 36px;
+    stroke: var(--purple-accent);
+    fill: none;
+    opacity: 0.4;
+  }
+
+  .photo-badge {
+    position: absolute;
+    bottom: 16px; right: 16px;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+  }
+
+  .about-right h2 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: clamp(32px, 4vw, 52px);
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    line-height: 1.0;
+    margin-bottom: 28px;
+    margin-top: 24px;
+  }
+
+  .about-right p {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--purple-accent);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo { opacity: 0.6; font-size: 11px; }
+
+  .copyright {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav, #hero, #whats-inside, #who, #proof, #second-cta, #about, footer {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    nav { padding-top: 18px; padding-bottom: 18px; }
+    #hero { padding-bottom: 64px; }
+    #whats-inside, #who, #proof, #second-cta, #about { padding-top: 72px; padding-bottom: 72px; }
+
+    .form-row { grid-template-columns: 1fr; }
+    .inside-grid { grid-template-columns: 1fr; }
+    .who-inner { grid-template-columns: 1fr; gap: 40px; }
+    .proof-grid { grid-template-columns: 1fr; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .about-photo-frame { max-width: 280px; }
+
+    .hero-ghost { display: none; }
+    .hero-headline { font-size: clamp(44px, 10vw, 72px); }
+  }
+
+  @media (max-width: 600px) {
+    .inside-item { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">Two<em>Hoots</em> Digital</a>
+  <a href="index.html#get-audit" class="nav-cta">Book the audit</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-ghost">FREE</div>
+  <div class="hero-inner">
+    <div class="hero-tag fade-up">Free guide</div>
+    <h1 class="hero-headline fade-up">
+      Meta says your<br>
+      ads are working.<br>
+      <span class="accent">Your Shopify store<br>disagrees.</span>
+    </h1>
+    <p class="hero-sub fade-up">
+      <strong>You're getting clicks. You're not getting sales.</strong> This guide shows you exactly where the gap is — and what to do about it. No theory. No fluff. Just the specific places your store is losing the sale after the ad does its job.
+    </p>
+    <form class="opt-in-form fade-up" action="tripwire.html" method="GET" onsubmit="return handleSubmit(this)">
+      <div class="form-row">
+        <input type="text" name="name" placeholder="First name" required>
+        <input type="email" name="email" placeholder="Email address" required>
+      </div>
+      <button type="submit" class="form-submit">Send me the free guide →</button>
+      <p class="form-note">Free. No credit card. Delivered straight to your inbox.</p>
+    </form>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section id="whats-inside">
+  <div class="container">
+    <div class="section-label purple fade-up">What's inside</div>
+    <h2 class="fade-up">
+      Not a theory.<br>
+      <span class="accent">A checklist.</span>
+    </h2>
+    <p class="inside-intro fade-up">The guide walks you through the four most common places ecommerce stores lose the sale — after a paid click. Most of them take less than an hour to fix.</p>
+    <div class="inside-grid">
+      <div class="inside-item fade-up">
+        <div class="inside-num">01</div>
+        <div class="inside-text">
+          <h3>The landing page problem</h3>
+          <p>Why sending ad traffic to your homepage is costing you sales — and what page to send them to instead.</p>
+        </div>
+      </div>
+      <div class="inside-item fade-up">
+        <div class="inside-num">02</div>
+        <div class="inside-text">
+          <h3>The product page gap</h3>
+          <p>The five things your product page is probably missing that are making people click off. Most of them are one sentence fixes.</p>
+        </div>
+      </div>
+      <div class="inside-item fade-up">
+        <div class="inside-num">03</div>
+        <div class="inside-text">
+          <h3>The checkout leak</h3>
+          <p>Where people drop off between "add to cart" and "order confirmed" — and the specific friction points that cause it.</p>
+        </div>
+      </div>
+      <div class="inside-item fade-up">
+        <div class="inside-num">04</div>
+        <div class="inside-text">
+          <h3>The mismatch signal</h3>
+          <p>Why the ad and the store can each look fine but still not work together — and how to spot when that's your actual problem.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section id="who">
+  <div class="container">
+    <div class="who-inner">
+      <div>
+        <div class="section-label fade-up">Who it's for</div>
+        <h2 class="fade-up">
+          Right for<br>
+          <span class="accent">you if...</span>
+        </h2>
+        <p class="fade-up">This guide is for ecommerce store owners running Meta ads who are getting traffic but not the sales to match. If your ads are off or your store doesn't have any traffic yet, this isn't the right starting point.</p>
+        <p class="fade-up">If any of the below sounds familiar, read it.</p>
+      </div>
+      <div>
+        <ul class="who-list">
+          <li class="fade-up">Your Meta ROAS looks fine. Your revenue doesn't match it.</li>
+          <li class="fade-up">You're getting clicks but your conversion rate is below 2%.</li>
+          <li class="fade-up">You've changed your creative and targeting. Nothing's moved.</li>
+          <li class="fade-up">You know something is broken. You don't know what.</li>
+          <li class="fade-up">You want a clear answer, not another generic "improve your checkout" article.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section id="proof">
+  <div class="container">
+    <div class="section-label fade-up">What people say</div>
+    <div class="proof-grid">
+      <div class="proof-item fade-up">
+        <p class="proof-quote">"I'd been tweaking my ads for months. Turns out <strong>it was never the ads.</strong> My product page was missing three things that would have taken me an afternoon to fix. I wish I'd known this six months ago."</p>
+        <div class="proof-attr">
+          <div class="proof-name">Sarah M.</div>
+          <div class="proof-role">Skincare brand founder</div>
+        </div>
+      </div>
+      <div class="proof-item fade-up">
+        <p class="proof-quote">"Really specific. Not vague advice about 'improving user experience' — <strong>actual things to fix, with reasons.</strong> I implemented two of the checkout changes the same day and my cart abandonment dropped within a week."</p>
+        <div class="proof-attr">
+          <div class="proof-name">Tom R.</div>
+          <div class="proof-role">Homeware ecommerce, 3 years running</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECOND CTA -->
+<section id="second-cta">
+  <div class="container">
+    <h2 class="fade-up">
+      Find the leak.<br>
+      <span class="accent">Fix it today.</span>
+    </h2>
+    <p class="fade-up">Takes 30 minutes to read. Most people find at least one problem they can fix the same day.</p>
+    <form class="second-cta-form fade-up" action="tripwire.html" method="GET" onsubmit="return handleSubmit(this)">
+      <input type="text" name="name" placeholder="First name" required>
+      <input type="email" name="email" placeholder="Email address" required>
+      <button type="submit" class="form-submit">Send me the free guide →</button>
+      <p class="form-note" style="text-align:center;">Free. No credit card. No spam.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div>
+        <div class="about-photo-frame fade-up">
+          <div class="photo-placeholder">
+            <svg viewBox="0 0 24 24" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>Your photo here</span>
+          </div>
+          <div class="photo-badge">Ads & Shopify Specialist</div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="section-label purple fade-up">Who wrote this</div>
+        <h2 class="fade-up">
+          I find the leaks<br>
+          <span class="accent">other people miss.</span>
+        </h2>
+        <p class="fade-up">I'm a Meta ads specialist who works exclusively with ecommerce brands. Most of my clients come to me convinced their ads are the problem. Usually they're not.</p>
+        <p class="fade-up">I wrote this guide because I saw the same issues on almost every store I audited. They're not complicated. They're just not obvious from the inside. The guide is a shortcut to what I look for first.</p>
+        <p class="fade-up">If you want to go deeper after reading it, the full audit is there when you're ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="logo">Two<em>Hoots</em> Digital</a>
+  <div class="copyright">© 2026 Two Hoots Digital. All rights reserved.</div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cx += (mx - cx) * 0.15;
+    cy += (my - cy) * 0.15;
+    cursor.style.left = cx + 'px';
+    cursor.style.top = cy + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button, input, .inside-item, .who-list li, .proof-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+  });
+
+  // Fade-up
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Form: redirect to tripwire
+  function handleSubmit(form) {
+    window.location.href = 'tripwire.html';
+    return false;
+  }
+</script>
+</body>
+</html>

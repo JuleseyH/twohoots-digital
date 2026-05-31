@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One More Thing — Two Hoots Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Anybody:ital,wght@0,100..900;1,100..900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0B0B0B;
+    --yellow: #F5E500;
+    --white: #FFFFFF;
+    --off-white: #F0EDE6;
+    --grey: #9A9A9A;
+    --dark-grey: #1A1A1A;
+    --purple-bg: #1A0A3A;
+    --purple-bg-mid: #160830;
+    --purple-bright: #BB99FF;
+    --purple-accent: #AA88FF;
+    --border: rgba(255,255,255,0.08);
+    --border-yellow: rgba(245,229,0,0.3);
+    --border-purple: rgba(187,153,255,0.25);
+    --max-w: 860px;
+  }
+
+  html { scroll-behavior: smooth; cursor: none; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 300;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  /* ── CURSOR ── */
+  #cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--yellow);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+    mix-blend-mode: difference;
+  }
+  #cursor.grow { width: 36px; height: 36px; }
+
+  /* ── FADE UP ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up.delay-1 { transition-delay: 0.1s; }
+  .fade-up.delay-2 { transition-delay: 0.2s; }
+  .fade-up.delay-3 { transition-delay: 0.3s; }
+  .fade-up.delay-4 { transition-delay: 0.4s; }
+  /* Hero animates on load */
+  #hero .fade-up { animation: fadeUpIn 0.7s ease forwards; opacity: 0; }
+  #hero .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  #hero .fade-up:nth-child(2) { animation-delay: 0.25s; transition-delay: 0; }
+  #hero .fade-up:nth-child(3) { animation-delay: 0.4s; transition-delay: 0; }
+  @keyframes fadeUpIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .accent { color: var(--yellow); font-style: italic; }
+
+  /* ── TOP BAR ── */
+  .top-bar {
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo em { font-style: normal; color: var(--yellow); }
+
+  /* ── HERO ── */
+  #hero {
+    padding: 80px 48px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(245,229,0,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .confirm-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .confirm-tag .dot {
+    width: 6px; height: 6px;
+    background: var(--yellow);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  #hero h1 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: clamp(36px, 5.5vw, 68px);
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  #hero p {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--grey);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.65;
+    position: relative;
+    z-index: 2;
+  }
+  #hero p strong { color: var(--white); font-weight: 500; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── OFFER ── */
+  #offer {
+    padding: 72px 48px;
+  }
+
+  .offer-inner {
+    border: 1px solid var(--border-yellow);
+    padding: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offer-inner::before {
+    content: '£397';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(120px, 18vw, 220px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245,229,0,0.06);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .offer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .offer-label::after {
+    content: '';
+    width: 48px; height: 1px;
+    background: var(--border-yellow);
+  }
+
+  .offer-inner h2 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: clamp(32px, 4.5vw, 54px);
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    line-height: 1.0;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .offer-inner > p {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--grey);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+  }
+  .offer-inner > p strong { color: var(--white); font-weight: 500; }
+
+  /* ── DELIVERABLES MINI LIST ── */
+  .deliverables {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .deliverables li {
+    background: var(--dark-grey);
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--grey);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s ease;
+  }
+  .deliverables li:hover { background: var(--black); }
+
+  .deliverables li::before {
+    content: '';
+    width: 14px; height: 14px;
+    border: 1px solid var(--border-yellow);
+    flex-shrink: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='7' viewBox='0 0 9 7'%3E%3Cpath d='M1 3.5l2.5 2.5 4.5-5' stroke='%23F5E500' stroke-width='1.5' fill='none' stroke-linecap='square'/%3E%3C/svg%3E") center/9px no-repeat;
+  }
+
+  /* ── PRICE + CTA ── */
+  .price-cta-block {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .price-display {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .price-symbol {
+    font-family: 'Anybody', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    line-height: 1;
+  }
+
+  .price-amount {
+    font-family: 'Anybody', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .price-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .price-detail {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Anybody', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 20px 40px;
+    text-decoration: none;
+    border: none;
+    cursor: none;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+  }
+  .cta-btn:hover {
+    background: var(--off-white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(245,229,0,0.15);
+  }
+
+  .guarantee {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── WHY NOW ── */
+  #why-now {
+    background: var(--purple-bg);
+    padding: 72px 48px;
+    border-top: 1px solid var(--border-purple);
+    border-bottom: 1px solid var(--border-purple);
+  }
+
+  .why-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--purple-bright);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .why-label::after {
+    content: '';
+    width: 48px; height: 1px;
+    background: var(--border-purple);
+  }
+
+  #why-now h2 {
+    font-family: 'Anybody', sans-serif;
+    font-weight: 900;
+    font-size: clamp(28px, 4vw, 48px);
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin-bottom: 28px;
+  }
+
+  .why-points {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border-purple);
+    max-width: 680px;
+  }
+
+  .why-point {
+    background: var(--purple-bg);
+    padding: 24px 28px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    transition: background 0.2s ease;
+  }
+  .why-point:hover { background: var(--purple-bg-mid); }
+
+  .why-point-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--purple-bright);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .why-point p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--purple-accent);
+    line-height: 1.6;
+  }
+  .why-point p strong { color: var(--white); font-weight: 500; }
+
+  /* ── SKIP ── */
+  #skip {
+    padding: 40px 48px;
+    text-align: center;
+  }
+
+  #skip p {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.2);
+  }
+
+  #skip a {
+    color: rgba(255,255,255,0.35);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-size: 14px;
+    transition: color 0.2s ease;
+    cursor: none;
+  }
+  #skip a:hover { color: var(--grey); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo { opacity: 0.6; }
+
+  .copyright {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--grey);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .top-bar, #hero, #offer, #why-now, #skip, footer {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    #hero { padding-top: 60px; padding-bottom: 56px; }
+    #offer, #why-now { padding-top: 56px; padding-bottom: 56px; }
+    .offer-inner { padding: 36px 28px; }
+    .deliverables { grid-template-columns: 1fr; }
+    .price-cta-block { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .cta-btn { width: 100%; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .price-amount { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+
+<!-- TOP BAR (no nav — nothing to distract) -->
+<div class="top-bar">
+  <a href="index.html" class="logo">Two<em>Hoots</em> Digital</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="confirm-tag fade-up">
+      <span class="dot"></span>
+      Guide on its way
+    </div>
+    <h1 class="fade-up">
+      Wait — before<br>
+      your guide lands<br>
+      <span class="accent">in your inbox...</span>
+    </h1>
+    <p class="fade-up">
+      <strong>You've just taken the first step.</strong> The guide will show you where the leak is. But if you want someone to go through your actual store and ads and tell you exactly what to fix — that's what the audit does.
+    </p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- OFFER -->
+<section id="offer">
+  <div class="container">
+    <div class="offer-inner">
+      <div class="offer-label fade-up">The offer</div>
+      <h2 class="fade-up">
+        The full audit.<br>
+        <span class="accent">Your store. Your ads.</span>
+      </h2>
+      <p class="fade-up">
+        The guide gives you the framework. The audit applies it to <strong>your specific store and campaigns.</strong> I go through everything — your Meta account, your landing pages, your product pages, your checkout — and come back with a Loom walkthrough and a written list of exactly what to fix, in order.
+      </p>
+
+      <ul class="deliverables">
+        <li class="fade-up">Meta Ads full review</li>
+        <li class="fade-up">Shopify store audit</li>
+        <li class="fade-up">Recorded Loom walkthrough</li>
+        <li class="fade-up">Written priority action checklist</li>
+        <li class="fade-up">Optional 30-min follow-up call</li>
+        <li class="fade-up">Delivered in 3 business days</li>
+      </ul>
+
+      <div class="price-cta-block fade-up">
+        <div class="price-display">
+          <span class="price-symbol">£</span>
+          <span class="price-amount">397</span>
+        </div>
+        <div class="price-meta">
+          <div class="price-detail">One-time · No monthly fees</div>
+          <a href="#" class="cta-btn">Book your audit →</a>
+        </div>
+      </div>
+
+      <div class="guarantee fade-up">Secure payment · Read-only access only · 3 business day turnaround</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section id="why-now">
+  <div class="container">
+    <div class="why-label fade-up">Why do it now</div>
+    <h2 class="fade-up">
+      You're already<br>
+      thinking about it.<br>
+      <span class="accent">Go deeper.</span>
+    </h2>
+    <div class="why-points">
+      <div class="why-point fade-up">
+        <div class="why-point-num">01</div>
+        <p>You just opted in for a guide about where your store is losing the sale. <strong>That problem doesn't fix itself.</strong> The audit tells you specifically where it's happening in your store.</p>
+      </div>
+      <div class="why-point fade-up">
+        <div class="why-point-num">02</div>
+        <p>The guide is a framework. The audit is a diagnosis. <strong>One tells you what to look for. The other tells you what's actually there.</strong></p>
+      </div>
+      <div class="why-point fade-up">
+        <div class="why-point-num">03</div>
+        <p>Most people who book the audit find at least one fix that <strong>pays for it within the first week.</strong> A single recovered sale on a £50 product and it's already worked.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKIP LINK -->
+<section id="skip">
+  <div class="container">
+    <p>Not ready yet? <a href="thankyou.html?type=guide">Go to your guide download page →</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="logo">Two<em>Hoots</em> Digital</a>
+  <div class="copyright">© 2026 Two Hoots Digital. All rights reserved.</div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  (function animCursor() {
+    cx += (mx - cx) * 0.15;
+    cy += (my - cy) * 0.15;
+    cursor.style.left = cx + 'px';
+    cursor.style.top = cy + 'px';
+    requestAnimationFrame(animCursor);
+  })();
+  document.querySelectorAll('a, button, .deliverables li, .why-point').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+  });
+
+  // Fade-up
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
