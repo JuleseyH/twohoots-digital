@@ -1025,6 +1025,46 @@
     text-transform: uppercase;
   }
 
+  /* ── FLOATING BOOK BUTTON ── */
+  .float-book {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 200;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    box-shadow: 0 4px 24px rgba(245,229,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, opacity 0.3s ease;
+  }
+  .float-book.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+  .float-book:hover {
+    transform: scale(1.12);
+    box-shadow: 0 8px 36px rgba(245,229,0,0.55);
+  }
+  @media (max-width: 600px) {
+    .float-book { width: 60px; height: 60px; bottom: 24px; right: 20px; font-size: 9px; }
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     nav { padding: 18px 24px; }
@@ -1138,6 +1178,7 @@
 </head>
 <body>
 
+<a href="#price" class="float-book" aria-label="Book your audit">Book</a>
 <div id="cursor"></div>
 <div id="grain"></div>
 
@@ -1493,7 +1534,7 @@
   }
   animateCursor();
 
-  document.querySelectorAll('a, button, .diag-item, .included-item, .step').forEach(el => {
+  document.querySelectorAll('a, button, .diag-item, .included-item, .step, .float-book').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
   });
@@ -1508,6 +1549,19 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  // Floating book button — show after hero, hide at price section
+  const floatBook = document.querySelector('.float-book');
+  const heroSection = document.querySelector('#hero');
+  const priceSection = document.querySelector('#price');
+  if (floatBook && heroSection && priceSection) {
+    let heroGone = false, priceVisible = false;
+    const updateFloat = () => {
+      floatBook.classList.toggle('visible', heroGone && !priceVisible);
+    };
+    new IntersectionObserver(([e]) => { heroGone = !e.isIntersecting; updateFloat(); }, { threshold: 0.1 }).observe(heroSection);
+    new IntersectionObserver(([e]) => { priceVisible = e.isIntersecting; updateFloat(); }, { threshold: 0.2 }).observe(priceSection);
+  }
+
   // Counting stats
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced) {
