@@ -722,6 +722,14 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   }
 
+  .stripe-btn-wrap {
+    margin-bottom: 16px;
+  }
+  .stripe-btn-wrap stripe-buy-button {
+    display: block;
+    width: 100%;
+  }
+
   .guarantee {
     font-family: 'DM Mono', monospace;
     font-size: 9px;
@@ -1198,7 +1206,13 @@
           <li>Optional 30-min follow-up Zoom</li>
           <li>Delivered in 3 business days</li>
         </ul>
-        <a href="#" class="price-cta">Book your audit →</a>
+        <div class="stripe-btn-wrap">
+          <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+          <stripe-buy-button
+            buy-button-id="buy_btn_1TdTiwHHfr86C233J8wyiUzZ"
+            publishable-key="pk_live_1qFj1Re6VMIRH6Hd8Yma0RZh00rXTQsKlO"
+          ></stripe-buy-button>
+        </div>
         <div class="guarantee">Secure payment · Read-only access only</div>
       </div>
     </div>
