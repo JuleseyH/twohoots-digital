@@ -839,15 +839,31 @@
 
   .photo-badge {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
-    background: var(--yellow);
-    color: var(--black);
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.14em;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+    padding: 36px 20px 16px;
+  }
+
+  .photo-badge-name {
+    display: block;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 8px 14px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .photo-badge-title {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--yellow);
   }
 
   .about-right h2 {
@@ -1252,8 +1268,11 @@
     <div class="about-inner">
       <div>
         <div class="photo-wrap fade-up">
-          <img src="julia.webp" alt="Julia Howlett — Ads &amp; Shopify Specialist">
-          <div class="photo-badge">Ads &amp; Shopify Specialist</div>
+          <img src="julia.webp" alt="Julia Leech-Howlett — Ecommerce Expert" style="transform:scaleX(-1);">
+          <div class="photo-badge">
+            <span class="photo-badge-name">Julia Leech-Howlett</span>
+            <span class="photo-badge-title">Ecommerce Expert</span>
+          </div>
         </div>
       </div>
       <div class="about-right">
