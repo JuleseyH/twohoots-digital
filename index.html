@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Two Hoots Digital — Meta Ads + Shopify Audit</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +41,7 @@
     font-weight: 300;
     line-height: 1.65;
     overflow-x: hidden;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   /* ── SPARKLES & ORBS ── */
@@ -1030,10 +1031,9 @@
     .container { padding: 0 24px; }
 
     #hero { padding-left: 24px; padding-right: 24px; }
-    #diagnosis, #included, #how, #price, #about, #included, #final-cta { padding: 72px 24px; }
+    #diagnosis, #included, #how, #price, #about, #final-cta { padding: 72px 24px; }
     footer { padding: 28px 24px; }
 
-    .diag-grid { grid-template-columns: 1fr; }
     .included-item { grid-template-columns: 36px 1fr; gap: 20px; }
     .included-item p { display: none; }
     .steps-row { grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -1042,14 +1042,23 @@
     .about-inner { grid-template-columns: 1fr; gap: 48px; }
     .stats-grid { grid-template-columns: repeat(3, 1fr); }
 
-    /* Typography scale for tablet/mobile */
+    /* Typography */
     .hero-headline { font-size: clamp(32px, 8vw, 70px); word-break: break-word; }
-    .hero-sub { font-size: 26px; }
-    #diagnosis h2, #included h2, #how h2, #final-cta h2 { font-size: clamp(34px, 7vw, 56px); }
-    .body-text { font-size: 24px; }
-    .diag-item p, .included-item p, .step p, .about-right p { font-size: 26px; }
+    .hero-sub { font-size: 22px; }
+    .diag-headline { font-size: clamp(24px, 6vw, 40px); }
+    #included h2, #how h2, #final-cta h2 { font-size: clamp(34px, 7vw, 56px); }
+    .body-text { font-size: 20px; }
+    .step p, .about-right p { font-size: 20px; }
     .section-label { font-size: 11px; }
     .scroll-indicator { right: 24px; }
+
+    /* FAQ + price scaled down */
+    .faq-q { font-size: 17px; }
+    .faq-a { font-size: 18px; }
+    .faq-item.open .faq-a { max-height: 600px; }
+    .price-checklist li { font-size: 18px; }
+    .price-figure { font-size: clamp(52px, 8vw, 80px); }
+    .diag-pivot { padding: 48px 0; }
   }
 
   /* ── REDUCED MOTION ── */
@@ -1059,10 +1068,7 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
-    .fade-up {
-      opacity: 1;
-      transform: none;
-    }
+    .fade-up { opacity: 1; transform: none; }
     .star, .shooting-star, .sparkle, .sparkle-float, .orb, .scroll-line, #grain, .marquee-track {
       animation: none !important;
     }
@@ -1070,8 +1076,19 @@
     .diag-pivot-line:last-child { clip-path: none !important; }
   }
 
+  /* ── TOUCH: remove stuck-hover effects ── */
+  @media (hover: none) {
+    .included-item:hover { background: var(--black); }
+    .included-item:hover::before { width: 0; }
+    .diag-item:hover { background: var(--purple-bg); }
+    .logo:hover span { text-shadow: none; }
+    .included-item:hover .item-icon svg { transform: none; }
+  }
+
   @media (max-width: 600px) {
-    .included-item h3 { font-size: clamp(20px, 5vw, 28px); }
+    /* Hide nav buy button — CTA is in price section */
+    .nav-cta-stripe { display: none; }
+
     .steps-row { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr; }
 
@@ -1081,11 +1098,39 @@
 
     /* Font sizes for small phones */
     .hero-headline { font-size: clamp(28px, 8vw, 48px); word-break: break-word; }
-    .hero-sub { font-size: 24px; }
-    .logo { font-size: 26px; }
-    .body-text { font-size: 26px; }
-    .diag-item p, .included-item p, .step p { font-size: 21px; }
+    .hero-sub { font-size: 18px; }
+    .logo { font-size: 20px; }
+    footer .logo { font-size: 18px; }
+    .body-text { font-size: 18px; }
+    .step p { font-size: 16px; }
+    .about-right p { font-size: 18px; }
     .section-label { font-size: 10px; }
+
+    /* Restore included item descriptions on mobile */
+    .included-item { display: flex; flex-direction: column; padding: 24px; gap: 10px; align-items: flex-start; }
+    .included-item p { display: block; font-size: 15px; text-align: left; opacity: 0.85; }
+    .included-item h3 { font-size: clamp(18px, 5vw, 26px); }
+
+    /* Diagnosis pivot: tighter on small screens */
+    .diag-pivot { padding: 36px 0; }
+    .diag-pivot-line:first-child { font-size: clamp(20px, 5.5vw, 30px); }
+    .diag-pivot-line:last-child { font-size: clamp(24px, 6.5vw, 36px); }
+
+    /* FAQ + price on small screens */
+    .faq-q { font-size: 15px; padding: 18px 20px; }
+    .faq-a { font-size: 16px; padding: 0 20px; }
+    .faq-item.open .faq-a { padding: 0 20px 18px; max-height: 800px; }
+    .price-checklist li { font-size: 16px; }
+    .price-card { padding: 32px 28px; }
+
+    /* Final CTA */
+    #final-cta { padding: 80px 24px; }
+    .cta-stripe { width: 100%; }
+  }
+
+  @media (max-width: 480px) {
+    /* Footer stacks on very small screens */
+    footer { flex-direction: column; align-items: flex-start; gap: 16px; padding-bottom: max(24px, env(safe-area-inset-bottom)); }
   }
 </style>
 </head>
