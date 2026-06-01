@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Two Hoots Digital — Meta Ads + Shopify Audit</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Anybody:ital,wght@0,100..900;1,100..900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -15,7 +16,7 @@
     --yellow: #F5E500;
     --white: #FFFFFF;
     --off-white: #F0EDE6;
-    --grey: #9A9A9A;
+    --grey: #C8C8C8;
     --dark-grey: #1A1A1A;
     --mid-grey: #282828;
     --purple-bg: #1A0A3A;
@@ -40,6 +41,87 @@
     line-height: 1.65;
     overflow-x: hidden;
   }
+
+  /* ── SPARKLES & ORBS ── */
+  .sparkle { position: absolute; pointer-events: none; animation: sparklePop 3s ease-in-out infinite; z-index: 1; will-change: opacity, transform; }
+  @keyframes sparklePop { 0%,100%{opacity:0.2;transform:scale(1) rotate(0deg);} 50%{opacity:1;transform:scale(1.4) rotate(25deg);} }
+  .sparkle-float { position: absolute; pointer-events: none; animation: sparkleFloat 4s ease-in-out infinite; z-index: 1; }
+  @keyframes sparkleFloat { 0%,100%{opacity:0.15;transform:translateY(0) scale(1) rotate(0deg);} 50%{opacity:0.9;transform:translateY(-12px) scale(1.3) rotate(15deg);} }
+  .orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px); animation: orbFloat 8s ease-in-out infinite; }
+  @keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-30px) scale(1.05);} }
+  /* Fixed stars that scroll with page but stay in bg */
+  .star-field { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; -webkit-transform: translateZ(0); transform: translateZ(0); }
+  .star { position: absolute; border-radius: 50%; animation: starTwinkle var(--dur, 3s) ease-in-out infinite; animation-delay: var(--delay, 0s); will-change: opacity, transform; }
+  @keyframes starTwinkle { 0%,100%{opacity:0.1;transform:scale(1);} 50%{opacity:var(--peak-opacity,0.7);transform:scale(1.5);} }
+
+  /* ── SHOOTING STARS ── */
+  .shooting-star {
+    position: fixed;
+    top: var(--top, 20%);
+    left: -10%;
+    will-change: opacity, transform;
+    width: var(--len, 120px);
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent 0%, #BB99FF 40%, #F5E500 70%, transparent 100%);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation: shootAcross var(--speed, 3s) ease-in var(--delay, 0s) infinite;
+    transform: rotate(-15deg);
+  }
+  .shooting-star::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px; height: 3px;
+    background: #F5E500;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 1px rgba(245,229,0,0.8);
+  }
+  @keyframes shootAcross {
+    0%   { opacity: 0; transform: translateX(0) rotate(-15deg); }
+    5%   { opacity: 1; }
+    80%  { opacity: 0.6; }
+    100% { opacity: 0; transform: translateX(110vw) rotate(-15deg); }
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap { padding: 18px 0; background: var(--black); border-top: 1px solid var(--border-yellow); border-bottom: 1px solid var(--border-yellow); overflow: hidden; white-space: nowrap; }
+  .marquee-track { display: inline-flex; animation: marquee 28s linear infinite; align-items: center; }
+  .marquee-track:hover { animation-play-state: paused; }
+  .marquee-item { font-family: 'Anybody', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--yellow); padding: 0 36px; display: flex; align-items: center; gap: 36px; }
+  .marquee-item::after {
+    content: '';
+    display: block;
+    width: 30px; height: 19px;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 32' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23BB99FF'/%3E%3Cstop offset='100%25' stop-color='%23F5E500'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='14' cy='16' r='12' stroke='url(%23g)' stroke-width='3' fill='none'/%3E%3Ccircle cx='36' cy='16' r='12' stroke='url(%23g)' stroke-width='3' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: 0.7;
+  }
+  .marquee-oo { display: none; }
+  @keyframes marquee { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+  /* ── FAQ ── */
+  .faq-bg { background: var(--dark-grey); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 100px 48px; }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; max-width: var(--max-w); margin: 0 auto; }
+  .faq-intro h2 { font-family: 'Anybody', sans-serif; font-size: clamp(32px,3.5vw,50px); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 20px; }
+  .faq-intro h2 em { color: var(--yellow); font-style: italic; }
+  .faq-intro p { font-size: 17px; color: var(--grey); line-height: 1.75; font-weight: 300; }
+  .faq-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+  .faq-item { background: var(--dark-grey); }
+  .faq-q { width: 100%; padding: 22px 28px; display: flex; justify-content: space-between; align-items: center; background: none; border: none; color: var(--white); font-family: 'Anybody', sans-serif; font-size: 15px; font-weight: 600; text-align: left; cursor: pointer; gap: 16px; transition: background .2s; }
+  .faq-q:hover { background: rgba(255,255,255,0.03); }
+  .faq-icon { width: 24px; height: 24px; flex-shrink: 0; border: 1px solid var(--border-yellow); display: flex; align-items: center; justify-content: center; color: var(--yellow); font-size: 16px; font-weight: 300; transition: transform .3s, background .2s; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(245,229,0,0.1); }
+  .faq-a { padding: 0 28px; max-height: 0; overflow: hidden; font-size: 16px; color: var(--grey); line-height: 1.75; font-weight: 300; transition: max-height .35s ease, padding .35s ease; }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 28px 22px; }
+  @media (max-width: 900px) { .faq-bg { padding: 72px 24px; } .faq-grid { grid-template-columns: 1fr; } }
 
   /* ── CURSOR ── */
   #cursor {
@@ -97,9 +179,10 @@
 
   /* ── SECTION LABEL ── */
   .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
+    font-family: 'Anybody', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     display: inline-flex;
     align-items: center;
@@ -135,12 +218,45 @@
   .body-text {
     font-family: 'Anybody', sans-serif;
     font-weight: 300;
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 18px;
+    line-height: 1.75;
     color: var(--grey);
   }
 
   .body-text strong { color: var(--white); font-weight: 500; }
+
+  /* ── OO DIVIDER ── */
+  .oo-divider {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+  }
+  .oo-divider svg { opacity: 0.35; }
+  .oo-inline {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 10px;
+    opacity: 0.6;
+  }
+
+  /* ── OO MARK ── */
+  .oo-mark {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .oo-mark svg { display: block; }
+
+  /* Large watermark version */
+  .oo-watermark {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.06;
+    user-select: none;
+  }
 
   /* ── NAV ── */
   nav {
@@ -156,13 +272,18 @@
 
   .logo {
     font-family: 'Cinzel Decorative', serif;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 26px;
+    font-weight: 400;
     letter-spacing: 0.05em;
     color: var(--white);
     text-decoration: none;
   }
-  .logo span { color: var(--yellow); }
+  .logo span {
+    background: linear-gradient(90deg, #BB99FF 0%, #F5E500 60%, #F5E500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
   .nav-cta {
     font-family: 'DM Mono', monospace;
@@ -187,7 +308,8 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
+    padding-top: 120px;
     padding-bottom: 80px;
     overflow: hidden;
   }
@@ -216,9 +338,10 @@
   }
 
   .hero-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
+    font-family: 'Anybody', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--yellow);
     display: inline-flex;
@@ -234,13 +357,25 @@
   }
 
   .hero-headline {
-    font-size: clamp(56px, 8vw, 120px);
-    margin-bottom: 36px;
+    font-size: clamp(44px, 6vw, 88px);
+    margin-bottom: 40px;
   }
 
   .hero-sub {
-    font-size: 17px;
-    max-width: 560px;
+    font-size: 22px;
+    max-width: 600px;
+    line-height: 1.6;
+    color: var(--white);
+    font-weight: 300;
+  }
+  .hero-sub strong {
+    color: var(--yellow);
+    font-weight: 500;
+  }
+  .hero-sub em {
+    color: var(--purple-bright);
+    font-style: italic;
+    font-weight: 300;
   }
 
   .scroll-indicator {
@@ -317,7 +452,7 @@
   }
 
   .diag-item p {
-    font-size: 15px;
+    font-size: 17px;
     color: var(--purple-accent);
     line-height: 1.65;
     font-weight: 300;
@@ -374,7 +509,7 @@
   .item-icon svg { width: 20px; height: 20px; stroke: var(--yellow); fill: none; stroke-width: 1.5; }
 
   .included-item h3 {
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 0.01em;
     margin-bottom: 12px;
     color: var(--white);
@@ -382,9 +517,9 @@
   }
 
   .included-item p {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--grey);
-    line-height: 1.65;
+    line-height: 1.7;
     font-weight: 300;
   }
 
@@ -450,9 +585,9 @@
   }
 
   .step p {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--purple-accent);
-    line-height: 1.65;
+    line-height: 1.7;
     font-weight: 300;
   }
 
@@ -533,7 +668,7 @@
 
   .price-checklist li {
     font-family: 'Anybody', sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     color: rgba(0,0,0,0.8);
     padding: 10px 0;
@@ -650,9 +785,9 @@
   }
 
   .about-right p {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--purple-accent);
-    line-height: 1.7;
+    line-height: 1.75;
     font-weight: 300;
     margin-bottom: 20px;
   }
@@ -767,6 +902,7 @@
     nav { padding: 18px 24px; }
     .container { padding: 0 24px; }
 
+    #hero { padding-left: 24px; padding-right: 24px; }
     #diagnosis, #included, #how, #price, #about, #included, #final-cta { padding: 72px 24px; }
     footer { padding: 28px 24px; }
 
@@ -778,8 +914,13 @@
     .about-inner { grid-template-columns: 1fr; gap: 48px; }
     .stats-grid { grid-template-columns: repeat(3, 1fr); }
 
-    .hero-ghost { font-size: 160px; bottom: 20px; right: -20px; }
-    .hero-headline { font-size: clamp(48px, 10vw, 80px); }
+    /* Typography scale for tablet/mobile */
+    .hero-headline { font-size: clamp(32px, 8vw, 70px); word-break: break-word; }
+    .hero-sub { font-size: 18px; }
+    #diagnosis h2, #included h2, #how h2, #final-cta h2 { font-size: clamp(34px, 7vw, 56px); }
+    .body-text { font-size: 16px; }
+    .diag-item p, .included-item p, .step p, .about-right p { font-size: 15px; }
+    .section-label { font-size: 11px; }
     .scroll-indicator { right: 24px; }
   }
 
@@ -787,7 +928,18 @@
     .included-grid { grid-template-columns: 1fr; }
     .steps-row { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr; }
-    .hero-ghost { display: none; }
+
+    /* Keep stars & animations on mobile */
+    .star-field { position: fixed; }
+    .shooting-star { position: fixed; }
+
+    /* Font sizes for small phones */
+    .hero-headline { font-size: clamp(28px, 8vw, 48px); word-break: break-word; }
+    .hero-sub { font-size: 16px; }
+    .logo { font-size: 18px; }
+    .body-text { font-size: 15px; }
+    .diag-item p, .included-item p, .step p { font-size: 14px; }
+    .section-label { font-size: 10px; }
   }
 </style>
 </head>
@@ -796,25 +948,63 @@
 <div id="cursor"></div>
 <div id="grain"></div>
 
+<!-- STAR FIELD -->
+<div class="star-field">
+  <div class="star" style="width:2px;height:2px;background:#F5E500;top:5%;left:8%;--dur:2.1s;--delay:0s;--peak-opacity:0.9;"></div>
+  <div class="star" style="width:1px;height:1px;background:#BB99FF;top:12%;left:25%;--dur:3.4s;--delay:0.5s;--peak-opacity:0.7;"></div>
+  <div class="star" style="width:2px;height:2px;background:#F5E500;top:8%;left:45%;--dur:2.7s;--delay:1.2s;--peak-opacity:0.8;"></div>
+  <div class="star" style="width:1px;height:1px;background:#fff;top:15%;left:62%;--dur:4.1s;--delay:0.3s;--peak-opacity:0.5;"></div>
+  <div class="star" style="width:3px;height:3px;background:#BB99FF;top:6%;left:78%;--dur:2.9s;--delay:1.8s;--peak-opacity:0.9;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:22%;left:92%;--dur:3.6s;--delay:0.7s;--peak-opacity:0.6;"></div>
+  <div class="star" style="width:2px;height:2px;background:#fff;top:33%;left:5%;--dur:2.3s;--delay:1.5s;--peak-opacity:0.4;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:45%;left:18%;--dur:3.8s;--delay:0.2s;--peak-opacity:0.8;"></div>
+  <div class="star" style="width:2px;height:2px;background:#BB99FF;top:38%;left:38%;--dur:2.5s;--delay:2.1s;--peak-opacity:0.7;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:52%;left:55%;--dur:4.3s;--delay:0.9s;--peak-opacity:0.5;"></div>
+  <div class="star" style="width:3px;height:3px;background:#F5E500;top:28%;left:72%;--dur:2.1s;--delay:1.1s;--peak-opacity:1;"></div>
+  <div class="star" style="width:1px;height:1px;background:#BB99FF;top:60%;left:85%;--dur:3.2s;--delay:0.4s;--peak-opacity:0.6;"></div>
+  <div class="star" style="width:2px;height:2px;background:#fff;top:70%;left:12%;--dur:2.8s;--delay:1.7s;--peak-opacity:0.3;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:75%;left:32%;--dur:3.5s;--delay:0.6s;--peak-opacity:0.7;"></div>
+  <div class="star" style="width:2px;height:2px;background:#BB99FF;top:68%;left:58%;--dur:2.2s;--delay:2.3s;--peak-opacity:0.8;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:82%;left:76%;--dur:4.0s;--delay:1.0s;--peak-opacity:0.6;"></div>
+  <div class="star" style="width:3px;height:3px;background:#BB99FF;top:90%;left:48%;--dur:2.6s;--delay:0.8s;--peak-opacity:0.9;"></div>
+  <div class="star" style="width:1px;height:1px;background:#fff;top:88%;left:90%;--dur:3.3s;--delay:1.4s;--peak-opacity:0.4;"></div>
+
+  <!-- SHOOTING STARS -->
+  <div class="shooting-star" style="--top:8%;--len:140px;--speed:9s;--delay:0s;"></div>
+  <div class="shooting-star" style="--top:22%;--len:90px;--speed:11s;--delay:6s;"></div>
+  <div class="shooting-star" style="--top:45%;--len:160px;--speed:13s;--delay:2.5s;"></div>
+  <div class="shooting-star" style="--top:61%;--len:110px;--speed:10s;--delay:14s;"></div>
+  <div class="shooting-star" style="--top:15%;--len:80px;--speed:8s;--delay:18s;"></div>
+  <div class="shooting-star" style="--top:75%;--len:130px;--speed:12s;--delay:4s;"></div>
+  <div class="shooting-star" style="--top:33%;--len:100px;--speed:9s;--delay:22s;"></div>
+  <div class="shooting-star" style="--top:88%;--len:75px;--speed:7s;--delay:10s;"></div>
+</div>
+
 <!-- NAV -->
 <nav>
-  <a href="#" class="logo">Two<span>Hoots</span> Digital</a>
+  <a href="#" class="logo">Two <span>Hoots</span> Digital</a>
   <a href="#price" class="nav-cta">Get the audit</a>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
   <div class="container" style="position:relative;">
-    <div class="hero-ghost">£397</div>
+    <div class="orb" style="width:600px;height:600px;background:radial-gradient(circle,rgba(187,153,255,0.13) 0%,transparent 70%);top:-100px;right:-100px;animation-delay:0s;"></div>
+    <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(245,229,0,0.07) 0%,transparent 70%);bottom:50px;left:-80px;animation-delay:4s;"></div>
+    <div class="sparkle" style="top:18%;right:22%;animation-delay:0s;"><svg width="18" height="18" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+    <div class="sparkle" style="top:38%;right:12%;animation-delay:1.5s;"><svg width="11" height="11" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+    <div class="sparkle" style="bottom:28%;right:28%;animation-delay:.8s;"><svg width="14" height="14" viewBox="0 0 24 24" stroke="#BB99FF" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+    <div class="sparkle-float" style="top:25%;left:5%;animation-delay:0.3s;"><svg width="12" height="12" viewBox="0 0 24 24" stroke="#BB99FF" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+    <div class="sparkle-float" style="top:55%;right:8%;animation-delay:2.1s;"><svg width="20" height="20" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+    <div class="sparkle" style="top:70%;left:8%;animation-delay:1.1s;"><svg width="9" height="9" viewBox="0 0 24 24" stroke="#BB99FF" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+    <div class="sparkle-float" style="bottom:15%;right:42%;animation-delay:0.6s;"><svg width="13" height="13" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
     <div class="hero-content">
       <div class="hero-tag fade-up">Ad + Shopify Audit</div>
       <h1 class="hero-headline fade-up">
-        Your ads work.<br>
-        Your store<br>
-        <em class="yellow">doesn't.</em>
+        Your ads work. Your store <em class="yellow">doesn't.</em>
       </h1>
-      <p class="body-text hero-sub fade-up">
-        Meta says your campaigns are performing. But the sales aren't landing. The problem isn't your ads — it's the gap between the click and the checkout. We find it and fix it.
+      <p class="hero-sub fade-up">
+        Meta says your campaigns are performing. <strong>The sales tell a different story.</strong> The problem isn't your ads — it's <em>what happens after the click.</em> We find it. We fix it.
       </p>
     </div>
     <div class="scroll-indicator">
@@ -823,6 +1013,13 @@
     </div>
   </div>
 </section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Meta Ads Audit</span><span class="marquee-item">Shopify CRO</span><span class="marquee-item">Conversion Rate Fix</span><span class="marquee-item">3 Day Turnaround</span><span class="marquee-item">£397 Flat Fee</span><span class="marquee-item">Loom Walkthrough</span><span class="marquee-item">Action Checklist</span><span class="marquee-item">Find the Leak</span><span class="marquee-item">Meta Ads Audit</span><span class="marquee-item">Shopify CRO</span><span class="marquee-item">Conversion Rate Fix</span><span class="marquee-item">3 Day Turnaround</span><span class="marquee-item">£397 Flat Fee</span><span class="marquee-item">Loom Walkthrough</span><span class="marquee-item">Action Checklist</span><span class="marquee-item">Find the Leak</span>
+  </div>
+</div>
 
 <!-- DIAGNOSIS -->
 <section id="diagnosis">
@@ -913,6 +1110,8 @@
   </div>
 </section>
 
+<div class="oo-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 32" width="48" height="30" fill="none"><defs><linearGradient id="divOO1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#BB99FF"/><stop offset="100%" stop-color="#F5E500"/></linearGradient></defs><circle cx="14" cy="16" r="12" stroke="url(#divOO1)" stroke-width="2.5" fill="none"/><circle cx="36" cy="16" r="12" stroke="url(#divOO1)" stroke-width="2.5" fill="none"/></svg></div>
+
 <!-- HOW IT WORKS -->
 <section id="how">
   <div class="container">
@@ -946,6 +1145,8 @@
     </div>
   </div>
 </section>
+
+<div class="oo-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 32" width="48" height="30" fill="none"><defs><linearGradient id="divOO2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#BB99FF"/><stop offset="100%" stop-color="#F5E500"/></linearGradient></defs><circle cx="14" cy="16" r="12" stroke="url(#divOO2)" stroke-width="2.5" fill="none"/><circle cx="36" cy="16" r="12" stroke="url(#divOO2)" stroke-width="2.5" fill="none"/></svg></div>
 
 <!-- PRICE -->
 <section id="price">
@@ -1000,6 +1201,7 @@
         </h2>
         <p class="fade-up">I'm a Meta ads specialist with a reputation for finding the leaks other people miss. I've worked with ecommerce brands who had perfectly good ad campaigns that were bleeding money because of what happened after the click.</p>
         <p class="fade-up">Most audits tell you what's wrong. Mine tells you what to fix, in what order, and why it'll make a difference. You'll leave with a clear action list, not a 40-page PDF you'll never read.</p>
+        <div class="oo-divider" style="justify-content:flex-start; margin-bottom: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 32" width="40" height="25" fill="none"><defs><linearGradient id="statOO" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#BB99FF"/><stop offset="100%" stop-color="#F5E500"/></linearGradient></defs><circle cx="14" cy="16" r="12" stroke="url(#statOO)" stroke-width="2.5" fill="none"/><circle cx="36" cy="16" r="12" stroke="url(#statOO)" stroke-width="2.5" fill="none"/></svg></div>
         <div class="stats-grid fade-up">
           <div class="stat-item">
             <div class="stat-num">100+</div>
@@ -1019,9 +1221,51 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq-bg fade-up">
+  <div class="faq-grid">
+    <div class="faq-intro">
+      <div class="section-label fade-up">Questions</div>
+      <h2 class="fade-up">Stuff people <em>ask</em><br>before booking.</h2>
+      <p class="fade-up">If something's not covered here, drop me a message.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">What do you actually look at?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Your full Meta Ads account — campaigns, ad sets, creatives, audiences, spend — and your Shopify store end to end. Landing pages, product pages, cart, checkout. Everything a customer touches after clicking your ad.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What access do you need?<span class="faq-icon">+</span></button>
+        <div class="faq-a">Read-only access to your Meta Ads Manager and Shopify. You stay in full control — I can't make any changes, I can only view. Takes about five minutes to set up.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How long does it take?<span class="faq-icon">+</span></button>
+        <div class="faq-a">3 business days from when I receive access. You'll get the Loom walkthrough and written checklist together. If you want the optional follow-up call, we book that separately.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What if I don't get value from it?<span class="faq-icon">+</span></button>
+        <div class="faq-a">In my experience, every store I've audited has had at least one fixable issue that was costing sales. If yours genuinely has no problems, I'll tell you that — and explain why.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is this just a pitch for a retainer?<span class="faq-icon">+</span></button>
+        <div class="faq-a">No. The audit stands on its own. You'll get everything you need to act on the findings yourself. If you want ongoing help after that, we can talk — but there's no pressure and no follow-up sales sequence.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="oo-divider"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 32" width="48" height="30" fill="none"><defs><linearGradient id="divOO3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#BB99FF"/><stop offset="100%" stop-color="#F5E500"/></linearGradient></defs><circle cx="14" cy="16" r="12" stroke="url(#divOO3)" stroke-width="2.5" fill="none"/><circle cx="36" cy="16" r="12" stroke="url(#divOO3)" stroke-width="2.5" fill="none"/></svg></div>
+
 <!-- FINAL CTA -->
 <section id="final-cta">
   <div class="cta-glow"></div>
+  <div class="oo-watermark" style="top:50%;left:50%;transform:translate(-50%,-50%);">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 32" width="480" height="307" fill="none">
+      <defs><linearGradient id="ctaOO" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#BB99FF"/><stop offset="100%" stop-color="#F5E500"/></linearGradient></defs>
+      <circle cx="14" cy="16" r="12" stroke="url(#ctaOO)" stroke-width="0.8" fill="none"/>
+      <circle cx="36" cy="16" r="12" stroke="url(#ctaOO)" stroke-width="0.8" fill="none"/>
+    </svg>
+  </div>
   <div class="container">
     <h2 class="fade-up">
       Know exactly<br>
@@ -1034,7 +1278,16 @@
 
 <!-- FOOTER -->
 <footer>
-  <a href="#" class="logo">Two<span>Hoots</span> Digital</a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span class="oo-mark">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 32" width="32" height="20" fill="none">
+        <defs><linearGradient id="footOO" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#BB99FF"/><stop offset="100%" stop-color="#F5E500"/></linearGradient></defs>
+        <circle cx="14" cy="16" r="12" stroke="url(#footOO)" stroke-width="3" fill="none"/>
+        <circle cx="36" cy="16" r="12" stroke="url(#footOO)" stroke-width="3" fill="none"/>
+      </svg>
+    </span>
+    <a href="#" class="logo" style="opacity:0.6;">Two <span>Hoots</span> Digital</a>
+  </div>
   <div class="copyright">© 2026 Two Hoots Digital. All rights reserved.</div>
 </footer>
 
@@ -1072,6 +1325,15 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
 </script>
 </body>
 </html>
