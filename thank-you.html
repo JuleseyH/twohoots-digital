@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're Booked — Two Hoots Digital</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0B0B0B;
+    --yellow: #F5E500;
+    --white: #FFFFFF;
+    --off-white: #F0EDE6;
+    --grey: #C8C8C8;
+    --dark-grey: #1A1A1A;
+    --mid-grey: #282828;
+    --purple-bg: #1A0A3A;
+    --purple-bg-mid: #160830;
+    --purple-bright: #BB99FF;
+    --purple-accent: #E2D0FF;
+    --border: rgba(255,255,255,0.08);
+    --border-yellow: rgba(245,229,0,0.3);
+    --border-purple: rgba(187,153,255,0.25);
+    --max-w: 1200px;
+  }
+
+  html { scroll-behavior: smooth; cursor: none; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── SPARKLES & ORBS ── */
+  .sparkle { position: absolute; pointer-events: none; animation: sparklePop 3s ease-in-out infinite; z-index: 1; will-change: opacity, transform; }
+  @keyframes sparklePop { 0%,100%{opacity:0.05;transform:scale(1) rotate(0deg);} 50%{opacity:0.35;transform:scale(1.4) rotate(25deg);} }
+  .sparkle-float { position: absolute; pointer-events: none; animation: sparkleFloat 4s ease-in-out infinite; z-index: 1; }
+  @keyframes sparkleFloat { 0%,100%{opacity:0.04;transform:translateY(0) scale(1) rotate(0deg);} 50%{opacity:0.3;transform:translateY(-12px) scale(1.3) rotate(15deg);} }
+  .orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px); animation: orbFloat 8s ease-in-out infinite; }
+  @keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-30px) scale(1.05);} }
+
+  .star-field { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; -webkit-transform: translateZ(0); transform: translateZ(0); }
+  .star { position: absolute; border-radius: 50%; animation: starTwinkle var(--dur, 3s) ease-in-out infinite; animation-delay: var(--delay, 0s); will-change: opacity, transform; }
+  @keyframes starTwinkle { 0%,100%{opacity:0.04;transform:scale(1);} 50%{opacity:var(--peak-opacity,0.35);transform:scale(1.5);} }
+
+  .shooting-star {
+    position: fixed;
+    top: var(--top, 20%);
+    left: -10%;
+    will-change: opacity, transform;
+    width: var(--len, 120px);
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent 0%, #BB99FF 40%, #F5E500 70%, transparent 100%);
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    animation: shootAcross var(--speed, 3s) ease-in var(--delay, 0s) infinite;
+    transform: rotate(-15deg);
+  }
+  .shooting-star::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 3px; height: 3px;
+    background: #F5E500;
+    border-radius: 50%;
+    box-shadow: 0 0 4px 1px rgba(245,229,0,0.8);
+  }
+  @keyframes shootAcross {
+    0%   { opacity: 0; transform: translateX(0) rotate(-15deg); }
+    5%   { opacity: 0.35; }
+    80%  { opacity: 0.2; }
+    100% { opacity: 0; transform: translateX(110vw) rotate(-15deg); }
+  }
+
+  /* ── CURSOR ── */
+  #cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--yellow);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+    mix-blend-mode: difference;
+  }
+  #cursor.grow { width: 36px; height: 36px; }
+
+  /* ── GRAIN ── */
+  #grain {
+    position: fixed;
+    inset: -50%;
+    width: 200%; height: 200%;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: grain 0.5s steps(2) infinite;
+  }
+  @keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-2%, -3%); }
+    20% { transform: translate(3%, 2%); }
+    30% { transform: translate(-1%, 4%); }
+    40% { transform: translate(4%, -1%); }
+    50% { transform: translate(-3%, 1%); }
+    60% { transform: translate(2%, -4%); }
+    70% { transform: translate(-4%, 3%); }
+    80% { transform: translate(1%, -2%); }
+    90% { transform: translate(3%, 4%); }
+  }
+
+  /* ── FADE UP ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── SHARED ── */
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 48px; }
+  section { position: relative; }
+
+  h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.97;
+  }
+
+  em.yellow { font-style: italic; color: var(--yellow); }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .section-label::after {
+    content: '';
+    display: block;
+    width: 48px; height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, var(--black) 0%, transparent 100%);
+  }
+
+  .logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span {
+    background: linear-gradient(90deg, #BB99FF 0%, #F5E500 60%, #F5E500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── THANK YOU SECTION ── */
+  #thank-you {
+    min-height: 100vh;
+    background: var(--purple-bg);
+    padding: 160px 48px 120px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ty-ghost {
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(180px, 26vw, 400px);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(187,153,255,0.07);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+  }
+
+  .ty-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+  }
+
+  .ty-inner h1 {
+    font-size: clamp(52px, 7vw, 96px);
+    margin-bottom: 20px;
+  }
+
+  .ty-subheading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(22px, 2.5vw, 32px);
+    color: var(--purple-accent);
+    margin-bottom: 64px;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.4;
+  }
+
+  /* ── STEPS ── */
+  .ty-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border-purple);
+    margin-bottom: 56px;
+  }
+
+  .ty-step {
+    display: flex;
+    gap: 32px;
+    padding: 36px 40px;
+    background: var(--purple-bg);
+    transition: background 0.2s ease;
+  }
+  .ty-step:hover { background: var(--purple-bg-mid); }
+
+  .ty-step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    color: var(--purple-bright);
+    flex-shrink: 0;
+    padding-top: 2px;
+    min-width: 40px;
+  }
+
+  .ty-step-content h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .ty-step-content p {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 22px;
+    color: var(--purple-accent);
+    line-height: 1.7;
+    font-weight: 300;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  /* ── CONTACT LINE ── */
+  .ty-contact {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--grey);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  .ty-contact a {
+    color: var(--purple-bright);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-purple);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .ty-contact a:hover {
+    color: var(--white);
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  /* ── BACK BUTTON ── */
+  .ty-back {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 800;
+    font-size: 21px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: none;
+  }
+  .ty-back:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(245,229,0,0.2);
+  }
+
+  /* ── CONFETTI ── */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 36px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .logo { font-size: 24px; opacity: 0.6; }
+
+  .copyright {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--grey);
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    #thank-you { padding: 120px 24px 80px; }
+    footer { padding: 28px 24px; }
+    .ty-step { padding: 28px 24px; gap: 20px; }
+    .ty-step-content p { font-size: 20px; }
+  }
+
+  @media (max-width: 600px) {
+    .ty-ghost { display: none; }
+    .ty-subheading { font-size: 20px; margin-bottom: 40px; }
+    .logo { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+<div id="cursor"></div>
+<div id="grain"></div>
+
+<!-- STAR FIELD -->
+<div class="star-field">
+  <div class="star" style="width:2px;height:2px;background:#F5E500;top:5%;left:8%;--dur:2.1s;--delay:0s;--peak-opacity:0.41;"></div>
+  <div class="star" style="width:1px;height:1px;background:#BB99FF;top:12%;left:25%;--dur:3.4s;--delay:0.5s;--peak-opacity:0.32;"></div>
+  <div class="star" style="width:2px;height:2px;background:#F5E500;top:8%;left:45%;--dur:2.7s;--delay:1.2s;--peak-opacity:0.36;"></div>
+  <div class="star" style="width:1px;height:1px;background:#fff;top:15%;left:62%;--dur:4.1s;--delay:0.3s;--peak-opacity:0.23;"></div>
+  <div class="star" style="width:3px;height:3px;background:#BB99FF;top:6%;left:78%;--dur:2.9s;--delay:1.8s;--peak-opacity:0.41;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:22%;left:92%;--dur:3.6s;--delay:0.7s;--peak-opacity:0.27;"></div>
+  <div class="star" style="width:2px;height:2px;background:#fff;top:33%;left:5%;--dur:2.3s;--delay:1.5s;--peak-opacity:0.18;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:45%;left:18%;--dur:3.8s;--delay:0.2s;--peak-opacity:0.36;"></div>
+  <div class="star" style="width:2px;height:2px;background:#BB99FF;top:38%;left:38%;--dur:2.5s;--delay:2.1s;--peak-opacity:0.32;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:52%;left:55%;--dur:4.3s;--delay:0.9s;--peak-opacity:0.23;"></div>
+  <div class="star" style="width:3px;height:3px;background:#F5E500;top:28%;left:72%;--dur:2.1s;--delay:1.1s;--peak-opacity:0.45;"></div>
+  <div class="star" style="width:1px;height:1px;background:#BB99FF;top:60%;left:85%;--dur:3.2s;--delay:0.4s;--peak-opacity:0.27;"></div>
+  <div class="star" style="width:2px;height:2px;background:#fff;top:70%;left:12%;--dur:2.8s;--delay:1.7s;--peak-opacity:0.14;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:75%;left:32%;--dur:3.5s;--delay:0.6s;--peak-opacity:0.32;"></div>
+  <div class="star" style="width:2px;height:2px;background:#BB99FF;top:68%;left:58%;--dur:2.2s;--delay:2.3s;--peak-opacity:0.36;"></div>
+  <div class="star" style="width:1px;height:1px;background:#F5E500;top:82%;left:76%;--dur:4.0s;--delay:1.0s;--peak-opacity:0.27;"></div>
+  <div class="star" style="width:3px;height:3px;background:#BB99FF;top:90%;left:48%;--dur:2.6s;--delay:0.8s;--peak-opacity:0.41;"></div>
+  <div class="star" style="width:1px;height:1px;background:#fff;top:88%;left:90%;--dur:3.3s;--delay:1.4s;--peak-opacity:0.18;"></div>
+  <div class="shooting-star" style="--top:8%;--len:120px;--speed:10s;--delay:0s;"></div>
+  <div class="shooting-star" style="--top:38%;--len:100px;--speed:13s;--delay:5s;"></div>
+  <div class="shooting-star" style="--top:62%;--len:140px;--speed:11s;--delay:16s;"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">Two <span>Hoots</span> Digital</a>
+</nav>
+
+<!-- THANK YOU -->
+<section id="thank-you">
+  <div class="orb" style="width:600px;height:600px;background:radial-gradient(circle,rgba(187,153,255,0.13) 0%,transparent 70%);top:-100px;right:-100px;animation-delay:0s;"></div>
+  <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(245,229,0,0.06) 0%,transparent 70%);bottom:50px;left:-80px;animation-delay:4s;"></div>
+  <div class="sparkle" style="top:20%;right:18%;animation-delay:0s;"><svg width="16" height="16" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+  <div class="sparkle" style="top:40%;right:10%;animation-delay:1.5s;"><svg width="10" height="10" viewBox="0 0 24 24" stroke="#F5E500" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+  <div class="sparkle-float" style="bottom:30%;right:25%;animation-delay:0.8s;"><svg width="13" height="13" viewBox="0 0 24 24" stroke="#BB99FF" fill="none"><path d="M12 2l2 7h7l-6 4 2 7-5-4-5 4 2-7-6-4h7z" stroke-width="1.5"/></svg></div>
+
+  <div class="ty-ghost">Booked</div>
+
+  <div class="container">
+    <div class="ty-inner">
+      <div class="section-label fade-up" style="color:var(--purple-bright);">Confirmation</div>
+      <h1 class="fade-up">You're <em class="yellow">booked!</em></h1>
+      <p class="ty-subheading fade-up">Here's what happens next.</p>
+
+      <div class="ty-steps">
+        <div class="ty-step fade-up">
+          <div class="ty-step-num">01</div>
+          <div class="ty-step-content">
+            <h3>Check your inbox</h3>
+            <p>Your Stripe payment receipt is on its way. I'll follow up personally within 24 hours with everything you need to get started.</p>
+          </div>
+        </div>
+        <div class="ty-step fade-up">
+          <div class="ty-step-num">02</div>
+          <div class="ty-step-content">
+            <h3>Get ready to grant access</h3>
+            <p>You'll need to add me to your Meta Ads Manager and share your Shopify collaborator request code. Full instructions will be in my email so you don't need to do anything yet.</p>
+          </div>
+        </div>
+        <div class="ty-step fade-up">
+          <div class="ty-step-num">03</div>
+          <div class="ty-step-content">
+            <h3>Sit tight</h3>
+            <p>Once I have access I'll get started straight away. Your full audit, Loom walkthrough and priority action checklist will be with you within 3 business days of access being granted.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="ty-contact fade-up">Questions? Get in touch at <a href="mailto:julia@twohoots.digital">julia@twohoots.digital</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="logo">Two <span>Hoots</span> Digital</a>
+  <div class="copyright">© 2026 Two Hoots Digital. All rights reserved.</div>
+</footer>
+
+<script>
+  // Confetti burst on load
+  (function() {
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    const colours = ['#F5E500','#BB99FF','#ffffff','#F5E500','#E2D0FF','#F5E500','#BB99FF'];
+    let particles = [];
+    let animId;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    function Particle() {
+      this.x = rand(0, canvas.width);
+      this.y = rand(-20, -canvas.height * 0.3);
+      this.size = rand(4, 9);
+      this.speedY = rand(2.5, 6);
+      this.speedX = rand(-1.5, 1.5);
+      this.rotation = rand(0, Math.PI * 2);
+      this.rotSpeed = rand(-0.08, 0.08);
+      this.colour = colours[Math.floor(Math.random() * colours.length)];
+      this.shape = Math.random() > 0.4 ? 'rect' : 'star';
+      this.opacity = 1;
+      this.wobble = rand(0, Math.PI * 2);
+      this.wobbleSpeed = rand(0.05, 0.12);
+    }
+
+    Particle.prototype.draw = function() {
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      ctx.fillStyle = this.colour;
+      if (this.shape === 'rect') {
+        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.5);
+      } else {
+        // small 4-point star
+        const s = this.size * 0.5;
+        ctx.beginPath();
+        for (let i = 0; i < 8; i++) {
+          const angle = (i * Math.PI) / 4;
+          const r = i % 2 === 0 ? s : s * 0.4;
+          ctx.lineTo(Math.cos(angle) * r, Math.sin(angle) * r);
+        }
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
+    Particle.prototype.update = function() {
+      this.wobble += this.wobbleSpeed;
+      this.x += this.speedX + Math.sin(this.wobble) * 0.8;
+      this.y += this.speedY;
+      this.rotation += this.rotSpeed;
+      if (this.y > canvas.height * 0.75) {
+        this.opacity -= 0.025;
+      }
+    };
+
+    // Launch 160 particles
+    for (let i = 0; i < 160; i++) {
+      const p = new Particle();
+      p.y = rand(-canvas.height * 0.5, 20); // stagger start heights
+      particles.push(p);
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = particles.filter(p => p.opacity > 0);
+      particles.forEach(p => { p.update(); p.draw(); });
+      if (particles.length > 0) {
+        animId = requestAnimationFrame(loop);
+      } else {
+        canvas.style.display = 'none';
+      }
+    }
+    loop();
+  })();
+
+  const cursor = document.getElementById('cursor');
+  let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+  document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+  function animateCursor() {
+    curX += (mouseX - curX) * 0.15;
+    curY += (mouseY - curY) * 0.15;
+    cursor.style.left = curX + 'px';
+    cursor.style.top = curY + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
