@@ -281,6 +281,10 @@
   }
   .logo span {
     color: var(--yellow);
+    transition: text-shadow 0.35s ease;
+  }
+  .logo:hover span {
+    text-shadow: 0 0 28px rgba(245,229,0,0.5);
   }
 
   .nav-cta {
@@ -459,6 +463,11 @@
   .diag-pivot-line:last-child {
     font-size: clamp(38px, 6.5vw, 96px);
     color: var(--yellow);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+  }
+  .diag-pivot.visible .diag-pivot-line:last-child {
+    clip-path: inset(0 0% 0 0);
   }
 
   .diag-resolution {
@@ -550,7 +559,8 @@
     justify-content: center;
     flex-shrink: 0;
   }
-  .item-icon svg { width: 20px; height: 20px; stroke: var(--yellow); fill: none; stroke-width: 1.5; }
+  .item-icon svg { width: 20px; height: 20px; stroke: var(--yellow); fill: none; stroke-width: 1.5; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+  .included-item:hover .item-icon svg { transform: scale(1.25); }
 
   .included-item h3 {
     font-family: 'Cormorant Garamond', serif;
@@ -1046,6 +1056,7 @@
       animation: none !important;
     }
     .marquee-track { transform: none; }
+    .diag-pivot-line:last-child { clip-path: none !important; }
   }
 
   @media (max-width: 600px) {
@@ -1289,15 +1300,15 @@
         <div class="oo-divider" style="justify-content:flex-start; margin-bottom: 24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 32" width="40" height="25" fill="none"><defs><linearGradient id="statOO" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#BB99FF"/><stop offset="100%" stop-color="#F5E500"/></linearGradient><clipPath id="sil"><circle cx="14" cy="16" r="13"/></clipPath><clipPath id="sbh"><rect x="0" y="16" width="50" height="16"/></clipPath></defs><circle cx="36" cy="16" r="12" stroke="url(#statOO)" stroke-width="2.5" fill="none"/><circle cx="14" cy="16" r="12" stroke="url(#statOO)" stroke-width="2.5" fill="none"/><g clip-path="url(#sil)"><circle cx="36" cy="16" r="12" stroke="url(#statOO)" stroke-width="2.5" fill="none" clip-path="url(#sbh)"/></g></svg></div>
         <div class="stats-grid fade-up">
           <div class="stat-item">
-            <div class="stat-num">300+</div>
+            <div class="stat-num" data-target="300" data-suffix="+">300+</div>
             <div class="stat-label">Stores worked on</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num">3</div>
+            <div class="stat-num" data-target="3">3</div>
             <div class="stat-label">Day turnaround</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num">£397</div>
+            <div class="stat-num" data-target="397" data-prefix="£">£397</div>
             <div class="stat-label">Flat fee, no surprises</div>
           </div>
         </div>
@@ -1438,6 +1449,37 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  // Counting stats
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced) {
+    function countUp(el, target, duration, prefix, suffix) {
+      const start = performance.now();
+      const frame = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 4);
+        el.textContent = prefix + Math.floor(ease * target) + suffix;
+        if (progress < 1) requestAnimationFrame(frame);
+        else el.textContent = prefix + target + suffix;
+      };
+      requestAnimationFrame(frame);
+    }
+    const statNums = document.querySelectorAll('.stat-num[data-target]');
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          countUp(el, parseInt(el.dataset.target), 1400, el.dataset.prefix || '', el.dataset.suffix || '');
+          statObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    statNums.forEach(el => statObserver.observe(el));
+  }
+
+  // Console easter egg
+  console.log('%c Two Hoots Digital ', 'background:#1A0A3A;color:#F5E500;font-family:Georgia,serif;font-size:20px;font-weight:bold;padding:8px 16px;border-left:3px solid #F5E500;');
+  console.log('%c If you can read this, you know your way around a browser.\n That\'s more than most store owners can say.\n\n julia@twohoots.digital', 'color:#BB99FF;font-size:13px;line-height:2;');
+
   // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(btn => {
     btn.addEventListener('click', () => {
