@@ -280,10 +280,7 @@
     text-decoration: none;
   }
   .logo span {
-    background: linear-gradient(90deg, #BB99FF 0%, #F5E500 60%, #F5E500 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--yellow);
   }
 
   .nav-cta {
@@ -977,6 +974,23 @@
     .scroll-indicator { right: 24px; }
   }
 
+  /* ── REDUCED MOTION ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .fade-up {
+      opacity: 1;
+      transform: none;
+    }
+    .star, .shooting-star, .sparkle, .sparkle-float, .orb, .scroll-line, #grain, .marquee-track {
+      animation: none !important;
+    }
+    .marquee-track { transform: none; }
+  }
+
   @media (max-width: 600px) {
     .included-item h3 { font-size: clamp(20px, 5vw, 28px); }
     .steps-row { grid-template-columns: 1fr; }
@@ -1074,7 +1088,6 @@
 <!-- DIAGNOSIS -->
 <section id="diagnosis">
   <div class="container">
-    <div class="section-label fade-up">Sound familiar?</div>
     <h2 class="fade-up">
       You're spending<br>
       money.<br>
@@ -1108,7 +1121,6 @@
 <!-- WHAT'S INCLUDED -->
 <section id="included">
   <div class="container">
-    <div class="section-label fade-up">What's included</div>
     <h2 class="fade-up">
       A full <em class="yellow">diagnosis</em><br>
       and a fix list.
@@ -1202,7 +1214,6 @@
   <div class="container">
     <div class="price-inner">
       <div>
-        <div class="section-label fade-up">Investment</div>
         <h2 class="fade-up">
           Stop guessing.<br>
           Start fixing.
@@ -1272,7 +1283,7 @@
 <section class="faq-bg fade-up">
   <div class="faq-grid">
     <div class="faq-intro">
-      <div class="section-label fade-up">Questions</div>
+      <div class="section-label fade-up" style="color:var(--yellow);">Before you book</div>
       <h2 class="fade-up">Stuff people <em>ask</em><br>before booking.</h2>
       <p class="fade-up">If something's not covered here, drop me a message.</p>
     </div>
