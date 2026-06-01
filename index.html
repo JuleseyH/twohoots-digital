@@ -91,7 +91,7 @@
 
   /* ── MARQUEE ── */
   .marquee-wrap { padding: 18px 0; background: var(--black); border-bottom: 1px solid var(--border); overflow: hidden; white-space: nowrap; }
-  .marquee-track { display: inline-flex; animation: marquee 28s linear infinite; align-items: center; }
+  .marquee-track { display: inline-flex; animation: marquee 55s linear infinite; align-items: center; }
   .marquee-track:hover { animation-play-state: paused; }
   .marquee-item { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 26px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); padding: 0 36px; display: flex; align-items: center; gap: 36px; }
   .marquee-item::after {
@@ -410,6 +410,17 @@
   #diagnosis {
     background: var(--purple-bg);
     padding: 100px 48px;
+  }
+
+  .diag-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4.5vw, 56px);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 32px;
   }
 
   .diag-opening {
@@ -1157,6 +1168,7 @@
 <section id="diagnosis">
   <div class="container">
 
+    <h2 class="diag-headline fade-up">It started with the ROAS.</h2>
     <p class="diag-opening fade-up">One day it's 5x and you think you've cracked it.<br>The next day it's 1.2x and you're back to square one.</p>
 
     <div class="diag-narrative">
