@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -722,12 +723,26 @@
     box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   }
 
+  /* Stripe buy button resets */
+  stripe-buy-button { display: block; }
+
   .stripe-btn-wrap {
     margin-bottom: 16px;
   }
   .stripe-btn-wrap stripe-buy-button {
-    display: block;
     width: 100%;
+  }
+
+  /* Nav stripe button */
+  .nav-cta-stripe {
+    display: inline-block;
+  }
+
+  /* Final CTA stripe button */
+  .cta-stripe {
+    display: inline-block;
+    position: relative;
+    z-index: 2;
   }
 
   .guarantee {
@@ -1018,7 +1033,7 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">Two <span>Hoots</span> Digital</a>
-  <a href="#price" class="nav-cta">Get the audit</a>
+  <stripe-buy-button class="nav-cta-stripe" buy-button-id="buy_btn_1TdTiwHHfr86C233J8wyiUzZ" publishable-key="pk_live_1qFj1Re6VMIRH6Hd8Yma0RZh00rXTQsKlO"></stripe-buy-button>
 </nav>
 
 <!-- HERO -->
@@ -1207,11 +1222,7 @@
           <li>Delivered in 3 business days</li>
         </ul>
         <div class="stripe-btn-wrap">
-          <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-          <stripe-buy-button
-            buy-button-id="buy_btn_1TdTiwHHfr86C233J8wyiUzZ"
-            publishable-key="pk_live_1qFj1Re6VMIRH6Hd8Yma0RZh00rXTQsKlO"
-          ></stripe-buy-button>
+          <stripe-buy-button buy-button-id="buy_btn_1TdTiwHHfr86C233J8wyiUzZ" publishable-key="pk_live_1qFj1Re6VMIRH6Hd8Yma0RZh00rXTQsKlO"></stripe-buy-button>
         </div>
         <div class="guarantee">Secure payment · Read-only access only</div>
       </div>
@@ -1308,7 +1319,7 @@
       <em class="yellow">what's broken.</em>
     </h2>
     <p class="body-text fade-up">Stop tweaking ads that aren't the problem. Get the audit and find out what actually is.</p>
-    <a href="#price" class="cta-btn fade-up">Book your audit — £397 →</a>
+    <stripe-buy-button class="cta-stripe fade-up" buy-button-id="buy_btn_1TdTiwHHfr86C233J8wyiUzZ" publishable-key="pk_live_1qFj1Re6VMIRH6Hd8Yma0RZh00rXTQsKlO"></stripe-buy-button>
   </div>
 </section>
 
@@ -1341,7 +1352,7 @@
   }
   animateCursor();
 
-  document.querySelectorAll('a, button, .diag-item, .included-item, .step, .price-cta, .cta-btn, .nav-cta').forEach(el => {
+  document.querySelectorAll('a, button, .diag-item, .included-item, .step').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
   });
